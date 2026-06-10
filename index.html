@@ -226,35 +226,17 @@
             body, a, button, .project-card, .glass-panel { cursor: none !important; }
             
             .custom-cursor { 
-                display: block; 
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 6px; 
-                height: 6px; 
-                background: var(--accent); 
-                pointer-events: none;
-                border-radius: 50%;
-                z-index: 100000;
-                transform: translate(-50%, -50%);
-                will-change: left, top;
-            }
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px; 
+            background: var(--accent); pointer-events: none; border-radius: 50%;
+            z-index: 999999; transform: translate(-50%, -50%);
+        }
             
             .cursor-follower { 
-                display: block; 
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 26px; 
-                height: 26px; 
-                border: 1px solid rgba(176, 161, 113, 0.4); 
-                pointer-events: none;
-                border-radius: 50%;
-                z-index: 100000;
-                transform: translate(-50%, -50%);
-                will-change: left, top;
-                transition: transform 0.2s cubic-bezier(0.215, 0.610, 0.355, 1), background 0.2s, border-color 0.2s; 
-            }
+            position: fixed; top: 0; left: 0; width: 26px; height: 26px; 
+            border: 1px solid rgba(176, 161, 113, 0.4); pointer-events: none; 
+            border-radius: 50%; z-index: 999998; transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
             
             .pointer-hover-active { 
                 transform: translate(-50%, -50%) scale(1.4); 
