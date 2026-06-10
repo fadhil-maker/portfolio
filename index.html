@@ -330,9 +330,9 @@
             100% { transform: rotate(0deg); }
         }
 
-        /* Actively trip the screen block only when an arcade view is mounted in portrait mode */
+        /* Actively trip the screen block ONLY when a landscape-locked view is mounted in portrait mode */
         @media (max-width: 768px) and (orientation: portrait) {
-            body.immersive-mode-active .orientation-guard {
+            body.landscape-lock-active .orientation-guard {
                 display: flex !important;
             }
         }
@@ -896,6 +896,15 @@
                     document.body.classList.add('immersive-mode-active');
                 } else {
                     document.body.classList.remove('immersive-mode-active');
+                }
+
+                // ====================================================
+                // SPECIFIC LANDSCAPE CONSTRAINT LOCK
+                // ====================================================
+                if (targetViewId === 'golf-view') {
+                    document.body.classList.add('landscape-lock-active');
+                } else {
+                    document.body.classList.remove('landscape-lock-active');
                 }
                 
                 // Fire stable interface engine configurations
