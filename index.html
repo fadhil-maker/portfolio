@@ -192,7 +192,15 @@
         .atmo-dropdown-list::-webkit-scrollbar-thumb { background: var(--glass-border); }
         .atmo-dropdown-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        .project-standalone-container { height: calc(100vh - 70px); background-color: #020202; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .project-standalone-container { 
+    width: 100vw !important; /* Forces full viewport width initialization */
+    height: calc(100vh - 70px); 
+    background-color: #020202; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden; 
+}
         .studio-wrapper { width: 90%; max-width: 900px; text-align: center; }
         .app-title-header { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 400; margin-bottom: 0.5rem; line-height: 1; }
         .app-desc-meta { font-family: monospace; font-size: 0.85rem; color: var(--accent); opacity: 0.7; margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 1px; }
@@ -400,8 +408,11 @@
     }
     
     /* Secure absolute containers during active phone keyboard popups */
-    .td-standalone-container, .gg-standalone-container, .project-standalone-container {
-        height: calc(100vh - 55px) !important;
+    .td-standalone-container, 
+    .gg-standalone-container, 
+    .project-standalone-container {
+        width: 100vw !important;
+        height: calc(100vh - 55px) !important; /* Accounts for the smaller mobile header */
     }
 }
 @media (max-width: 768px) {
