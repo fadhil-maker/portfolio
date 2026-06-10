@@ -2109,7 +2109,7 @@
         }
 
         // ==================================================== 
-        // 07. RESTORED PREMIUM LIQUID INTERACTION ENGINE & CURSOR [FULLY UNIFIED]
+        // 07. RESTORED PREMIUM LIQUID INTERACTION ENGINE & CURSOR
         // ==================================================== 
         function launchVisualFXEngine() {
             const canvas = document.getElementById('interaction-canvas'); if (!canvas) return;
@@ -2125,7 +2125,7 @@
                 canvas.width = width; canvas.height = height;
             });
 
-            // Initialize hardware position vectors to the center of the viewport
+            // Initialize vector planes to center of screen to prevent boundary jumping
             let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2;
             let dotX = window.innerWidth / 2, dotY = window.innerHeight / 2;
             let ringX = window.innerWidth / 2, ringY = window.innerHeight / 2;
@@ -2134,7 +2134,7 @@
             let activeShockwaves = [];
             let activeCircles = []; 
 
-            // Track standard mouse movements
+            // Core Mouse Mover Tracker
             window.addEventListener('mousemove', (e) => {
                 targetX = e.clientX;
                 targetY = e.clientY;
@@ -2145,12 +2145,12 @@
                     firstMove = false;
                 }
 
-                // LIQUID TRAIL ENGINE: Drops smooth circular fading groups behind movement paths
+                // LIQUID CIRCLE TRAIL: drops the fluid fading premium circles on mouse move
                 if (Math.random() > 0.35) { 
                     activeCircles.push(new KineticCircle(e.clientX, e.clientY));
                 }
 
-                // Spotlight reflection matrix for glass panels
+                // Luminous card spotlight variable mapping
                 const interactiveCard = e.target.closest('.project-card, .glass-panel');
                 if (interactiveCard) {
                     const rect = interactiveCard.getBoundingClientRect();
@@ -2161,7 +2161,7 @@
                 }
             });
 
-            // Track continuous mobile touch gesture events
+            // Core Touch Swiping Tracker
             window.addEventListener('touchmove', (e) => {
                 if (e.touches && e.touches.length > 0) {
                     targetX = e.touches[0].clientX;
@@ -2173,7 +2173,7 @@
                         firstMove = false;
                     }
 
-                    // Mobile finger fluid matrix generator
+                    // Mobile fluid drop generator
                     if (Math.random() > 0.3) {
                         activeCircles.push(new KineticCircle(e.touches[0].clientX, e.touches[0].clientY));
                     }
@@ -2224,13 +2224,10 @@
                 for(let i=0; i<10; i++) activeCircles.push(new KineticCircle(x, y));
             }
 
-            // UNIFIED COORDINATE POSITION CALCULATOR
+            // UNIFIED SNAP-CENTER TICK CALCULATOR
             function updatePointers() {
-                // Pins the core dot perfectly 1:1 to your fingers or pointer tips instantly
                 dotX = targetX;
                 dotY = targetY;
-
-                // Applies smooth linear interpolation lag to drag the gold halo ring smoothly behind it
                 ringX += (targetX - ringX) * 0.15; 
                 ringY += (targetY - ringY) * 0.15;
 
@@ -2246,7 +2243,7 @@
 
             function executeMasterLoop() {
                 ctx.clearRect(0, 0, width, height);
-                updatePointers(); // Run pointer tracking smoothly on every refresh frame
+                updatePointers(); 
 
                 activeShockwaves.forEach((wave, idx) => {
                     wave.process(); wave.draw();
@@ -2276,10 +2273,10 @@
             executeMasterLoop();
         }
 
-        // Fire the restored visualization engine
+        // Run interaction module
         launchVisualFXEngine();
 
-        // --- STABLE RESIZE RUNTIME PROTECTOR ---
+        // --- STABLE RESIZE PROTECTION PIPELINE ---
         window.addEventListener('resize', () => {
             const activeView = document.querySelector('.app-view.active');
             if (!activeView) return;
