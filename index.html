@@ -52,7 +52,7 @@
             align-items: center; 
             padding: 0 8vw; 
             gap: 4vw; 
-            position: relative; /* Fixed: Secure baseline anchor position */
+            position: relative;
         }
         .hero-left { flex: 1.2; }
         .hero-right { flex: 0.8; display: flex; justify-content: flex-end; }
@@ -115,92 +115,22 @@
         #weather-search { width: 100%; background: rgba(0,0,0,0.8); border: 1px solid var(--glass-border); border-bottom: 1px solid var(--accent); padding: 0.8rem 1rem; color: #fff; font-family: monospace; outline: none; margin-bottom: 0.5rem; }
         .search-hint { display: block; font-family: monospace; font-size: 0.65rem; color: var(--accent); opacity: 0.6; margin-bottom: 1.2rem; }
         #weather-stats { font-family: monospace; color: var(--accent); font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
-        /* --- SEARCHABLE DROPDOWN COMPONENT SYSTEM --- */
-        .aether-search-select-container {
-            position: relative;
-            width: 100%;
-            margin-bottom: 0.3rem;
-        }
-        .aether-input-wrapper {
-            position: relative;
-            width: 100%;
-        }
-        #weather-search {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--accent);
-            padding: 0.8rem 2.5rem 0.8rem 1rem;
-            color: #fff;
-            font-family: monospace;
-            font-size: 0.85rem;
-            outline: none;
-            letter-spacing: 1px;
-        }
-        .dropdown-arrow {
-            position: absolute;
-            right: 1.2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--accent);
-            font-size: 0.7rem;
-            pointer-events: none;
-            transition: transform 0.2s ease;
-        }
-        .aether-search-select-container.active .dropdown-arrow {
-            transform: translateY(-50%) rotate(180deg);
-        }
         
-        /* Dropdown Options Drawer panel */
-        .atmo-dropdown-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            max-height: 185px;
-            background: #0a0a0a;
-            border: 1px solid var(--glass-border);
-            border-top: none;
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.8);
-        }
-        .atmo-dropdown-list.show {
-            display: block;
-        }
-        .atmo-dropdown-item {
-            padding: 0.7rem 1rem;
-            font-family: monospace;
-            font-size: 0.75rem;
-            color: var(--pearl);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: left;
-        }
-        .atmo-dropdown-item:hover {
-            background: rgba(176, 161, 113, 0.08);
-            color: var(--accent);
-            padding-left: 1.2rem; /* Soft kinetic nudge on hover */
-        }
+        .aether-search-select-container { position: relative; width: 100%; margin-bottom: 0.3rem; }
+        .aether-input-wrapper { position: relative; width: 100%; }
+        .dropdown-arrow { position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 0.7rem; pointer-events: none; transition: transform 0.2s ease; }
+        .aether-search-select-container.active .dropdown-arrow { transform: translateY(-50%) rotate(180deg); }
         
-        /* Clean minimalist scrollbar mapping */
+        .atmo-dropdown-list { position: absolute; top: 100%; left: 0; width: 100%; max-height: 185px; background: #0a0a0a; border: 1px solid var(--glass-border); border-top: none; overflow-y: auto; z-index: 1000; display: none; box-shadow: 0 12px 35px rgba(0,0,0,0.8); }
+        .atmo-dropdown-list.show { display: block; }
+        .atmo-dropdown-item { padding: 0.7rem 1rem; font-family: monospace; font-size: 0.75rem; color: var(--pearl); cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; letter-spacing: 1px; text-align: left; }
+        .atmo-dropdown-item:hover { background: rgba(176, 161, 113, 0.08); color: var(--accent); padding-left: 1.2rem; }
         .atmo-dropdown-list::-webkit-scrollbar { width: 4px; }
         .atmo-dropdown-list::-webkit-scrollbar-track { background: transparent; }
         .atmo-dropdown-list::-webkit-scrollbar-thumb { background: var(--glass-border); }
         .atmo-dropdown-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        .project-standalone-container { 
-    width: 100vw !important; /* Forces full viewport width initialization */
-    height: calc(100vh - 70px); 
-    background-color: #020202; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    overflow: hidden; 
-}
+        .project-standalone-container { width: 100vw !important; height: calc(100vh - 70px); background-color: #020202; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .studio-wrapper { width: 90%; max-width: 900px; text-align: center; }
         .app-title-header { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 400; margin-bottom: 0.5rem; line-height: 1; }
         .app-desc-meta { font-family: monospace; font-size: 0.85rem; color: var(--accent); opacity: 0.7; margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 1px; }
@@ -241,33 +171,12 @@
         /* ==================================================== */
         /* FLOATING NAV CAPSULE & NAVIGATION DESIGN SYSTEM     */
         /* ==================================================== */
-        .floating-capsule {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10, 10, 10, 0.75);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            z-index: 999;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            transition: opacity 0.3s ease;
-        }
+        .floating-capsule { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(10, 10, 10, 0.75); border: 1px solid var(--glass-border); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 0.6rem 1.2rem; border-radius: 40px; display: flex; align-items: center; gap: 1.2rem; z-index: 999; box-shadow: 0 10px 40px rgba(0,0,0,0.8); transition: opacity 0.3s ease; }
         .nav-internal-links { display: flex; gap: 1rem; }
-        .nav-capsule-link {
-            font-family: monospace; font-size: 0.75rem; color: var(--pearl); text-decoration: none; opacity: 0.4; letter-spacing: 1px; transition: opacity 0.3s;
-        }
+        .nav-capsule-link { font-family: monospace; font-size: 0.75rem; color: var(--pearl); text-decoration: none; opacity: 0.4; letter-spacing: 1px; transition: opacity 0.3s; }
         .nav-capsule-link:hover, .nav-capsule-link.active { opacity: 1; color: var(--accent); }
         .nav-divider { width: 1px; height: 16px; background: var(--glass-border); }
-        .nav-cv-download {
-            font-family: monospace; font-size: 0.75rem; font-weight: 600; color: var(--accent); text-decoration: none; letter-spacing: 1px; border-bottom: 1px dashed var(--accent); padding-bottom: 2px;
-        }
+        .nav-cv-download { font-family: monospace; font-size: 0.75rem; font-weight: 600; color: var(--accent); text-decoration: none; letter-spacing: 1px; border-bottom: 1px dashed var(--accent); padding-bottom: 2px; }
         .nav-cv-download:hover { color: #fff; border-bottom-color: #fff; }
         .cv-ext { font-size: 0.65rem; opacity: 0.6; }
 
@@ -278,9 +187,7 @@
         .certificate-action-trigger { display: block; font-family: monospace; font-size: 0.7rem; color: var(--accent); margin-top: 1.5rem; opacity: 0.5; letter-spacing: 1px; transition: opacity 0.3s; }
         .certificate-card:hover .certificate-action-trigger { opacity: 1; }
 
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.92); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.92); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-chassis { background: #0d0d0d; border: 1px solid var(--glass-border); width: 90%; max-width: 750px; padding: 2rem; border-radius: 6px; position: relative; display: flex; flex-direction: column; gap: 1.5rem; }
         .modal-close-btn { position: absolute; top: 20px; right: 20px; background: transparent; border: none; color: var(--pearl); font-family: monospace; font-size: 0.8rem; cursor: pointer; opacity: 0.5; transition: opacity 0.3s; }
@@ -326,7 +233,6 @@
             .pointer-hover-active { transform: translate(-50%, -50%) scale(1.4); background: rgba(176, 161, 113, 0.12); border-color: var(--accent); }
         }
 
-        /* SCROLL EXPAND TIMELINE INDICATORS */
         .scroll-cue { position: absolute; bottom: 4vh; left: 8vw; display: flex; align-items: center; gap: 1rem; opacity: 0.3; }
         .scroll-cue p { font-family: monospace; font-size: 0.65rem; letter-spacing: 2px; }
         .cue-line { width: 40px; height: 1px; background: var(--pearl); position: relative; transform-origin: left; animation: linePulse 2s infinite ease-in-out; }
@@ -336,149 +242,57 @@
             50.1% { transform: scaleX(1); transform-origin: right; }
             100% { transform: scaleX(0.3); transform-origin: right; }
         }
+
         /* ==================================================== */
-/* ==================================================== */
-/* 08. ULTRALUXE MOBILE VIEWPORT RESCUE MATRIX          */
-/* ==================================================== */
-@media (max-width: 768px) {
-    /* Compress the Header to maximize canvas viewports */
-    .project-header {
-        height: 55px !important;
-        padding: 0 4vw !important;
-    }
-    .back-btn {
-        padding: 0.4rem 0.8rem !important;
-        font-size: 0.75rem !important;
-    }
-    .project-brand {
-        font-size: 0.7rem !important;
-        letter-spacing: 1px !important;
-    }
+        /* 08. ULTRALUXE MOBILE VIEWPORT RESCUE MATRIX          */
+        /* ==================================================== */
+        @media (max-width: 768px) {
+            .project-header { height: 55px !important; padding: 0 4vw !important; }
+            .back-btn { padding: 0.4rem 0.8rem !important; font-size: 0.75rem !important; }
+            .project-brand { font-size: 0.7rem !important; letter-spacing: 1px !important; }
 
-    /* 1. GLYPH MATRIX MOBILE COORD OVERHAUL */
-    .gm-workspace {
-        flex-direction: column !important;
-        gap: 1.2rem !important;
-        padding: 1rem !important;
-    }
-    .gm-controls {
-        max-width: 100% !important;
-        padding: 1.2rem !important;
-    }
-    .gm-controls h2 {
-        font-size: 1.8rem !important;
-    }
-    .gm-canvas-frame {
-        min-height: 280px !important;
-        height: 42vh !important;
-        width: 100% !important;
-    }
-    #glyph-canvas {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        object-fit: contain !important; /* Prevents text from slipping off screen */
-    }
+            .gm-workspace { flex-direction: column !important; gap: 1.2rem !important; padding: 1rem !important; }
+            .gm-controls { max-width: 100% !important; padding: 1.2rem !important; }
+            .gm-controls h2 { font-size: 1.8rem !important; }
+            .gm-canvas-frame { min-height: 280px !important; height: 42vh !important; width: 100% !important; }
+            #glyph-canvas { max-width: 100% !important; max-height: 100% !important; object-fit: contain !important; }
 
-    /* 2. CHROMA MECHANICAL KEYBOARD GRID SCALING */
-    .keyboard-chassis {
-        padding: 0.4rem !important;
-        gap: 0.15rem !important;
-        max-width: 100% !important;
-    }
-    .kbd-key {
-        height: 28px !important;
-        font-size: 0.5rem !important;
-        border-bottom-width: 2px !important;
-    }
-    .app-title-header {
-        font-size: 2.2rem !important;
-    }
+            .keyboard-chassis { padding: 0.4rem !important; gap: 0.15rem !important; max-width: 100% !important; }
+            .kbd-key { height: 28px !important; font-size: 0.5rem !important; border-bottom-width: 2px !important; }
+            .app-title-header { font-size: 2.2rem !important; }
 
-    /* 3. HARD RE-INDEXING GAME CANVAS REAL ESTATE */
-    .golf-hud-overlay p, .app-desc-meta {
-        display: none !important; /* Hides verbose text to give canvas breathing room */
-    }
-    .golf-hud-overlay h2 {
-        font-size: 1.4rem !important;
-        margin-bottom: 0.1rem !important;
-    }
-    .golf-hud-overlay {
-        top: 12px !important;
-        left: 4vw !important;
-    }
-    
-    /* Secure absolute containers during active phone keyboard popups */
-    .td-standalone-container, 
-    .gg-standalone-container, 
-    .project-standalone-container {
-        width: 100vw !important;
-        height: calc(100vh - 55px) !important; /* Accounts for the smaller mobile header */
-    }
-}
-@media (max-width: 768px) {
-    /* --- PRISTINE PORTRAIT CYBER STRIKER --- */
-    #cs-hud {
-        position: absolute !important;
-        top: 10px !important;
-        left: 0 !important;
-        width: 100% !important;
-        padding: 0 4vw !important;
-        text-align: center !important;
-        background: transparent !important;
-    }
-    #cs-hud h2 {
-        font-size: 1.4rem !important;
-        letter-spacing: 1px !important;
-        color: #fff !important;
-        margin: 0 !important;
-    }
-    #cs-hud p {
-        display: none !important; /* Vaporizes the descriptive text completely on mobile */
-    }
-    #cs-score-readout {
-        display: block !important;
-        font-size: 0.7rem !important;
-        margin-top: 4px !important;
-        color: var(--accent) !important;
-        letter-spacing: 0.5px !important;
-    }
-}
-/* --- GRAVITY GOLF ORIENTATION GUARD --- */
-.orientation-guard-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #020202;
-    z-index: 999;
-    display: none; /* Hidden by default on wide viewports */
-    align-items: center;
-    justify-content: center;
-}
-.guard-message {
-    text-align: center;
-    font-family: monospace;
-    color: var(--accent);
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-}
-.guard-message span {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 10px;
-    animation: rotatePulse 2s infinite ease-in-out;
-}
+            .golf-hud-overlay p, .app-desc-meta { display: none !important; }
+            .golf-hud-overlay h2 { font-size: 1.4rem !important; margin-bottom: 0.1rem !important; }
+            .golf-hud-overlay { top: 12px !important; left: 4vw !important; }
+            
+            .td-standalone-container, 
+            .gg-standalone-container, 
+            .project-standalone-container {
+                width: 100vw !important;
+                height: calc(100vh - 55px) !important;
+            }
+        }
 
-@keyframes rotatePulse {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(-90deg); }
-    100% { transform: rotate(0deg); }
-}
+        @media (max-width: 768px) {
+            #cs-hud { position: absolute !important; top: 10px !important; left: 0 !important; width: 100% !important; padding: 0 4vw !important; text-align: center !important; background: transparent !important; }
+            #cs-hud h2 { font-size: 1.4rem !important; letter-spacing: 1px !important; color: #fff !important; margin: 0 !important; }
+            #cs-hud p { display: none !important; }
+            #cs-score-readout { display: block !important; font-size: 0.7rem !important; margin-top: 4px !important; color: var(--accent) !important; letter-spacing: 0.5px !important; }
+        }
 
-/* Activate the shield ONLY when a mobile user is holding the screen vertically */
-@media (max-width: 768px) and (orientation: portrait) {
-    .orientation-guard-overlay {
-        display: flex; /* Blocks portrait gameplay for Gravity Golf */
-    }
-}
+        .orientation-guard-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #020202; z-index: 999; display: none; align-items: center; justify-content: center; }
+        .guard-message { text-align: center; font-family: monospace; color: var(--accent); font-size: 0.75rem; letter-spacing: 1.5px; }
+        .guard-message span { font-size: 2rem; display: block; margin-bottom: 10px; animation: rotatePulse 2s infinite ease-in-out; }
+
+        @keyframes rotatePulse {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @media (max-width: 768px) and (orientation: portrait) {
+            .orientation-guard-overlay { display: flex; }
+        }
     </style>
 </head>
 <body>
@@ -553,15 +367,14 @@
             <h2 class="section-title">The Exhibits</h2>
             
             <div class="glass-panel wide-panel highlighted-project">
-            <span class="panel-tag">Live Production</span>
-            <h3>ShanuDigiCore &mdash; Appointment Booking System</h3>
-            <p class="project-desc">A customer-facing platform enabling remote scheduling, automating backend workflows, and eliminating physical wait times.</p>
-            <p class="tech-stack-used">Stack: Python/Django, HTML, CSS, JavaScript</p>
-            
-            <a href="https://shanudigicore.com/" target="_blank" class="luxury-link">
-                [ LAUNCH PRODUCTION LIVE STREAM &rarr; ]
-            </a>
-        </div>
+                <span class="panel-tag">Live Production</span>
+                <h3>ShanuDigiCore &mdash; Appointment Booking System</h3>
+                <p class="project-desc">A customer-facing platform enabling remote scheduling, automating backend workflows, and eliminating physical wait times.</p>
+                <p class="tech-stack-used">Stack: Python/Django, HTML, CSS, JavaScript</p>
+                <a href="https://shanudigicore.com/" target="_blank" class="luxury-link">
+                    [ LAUNCH PRODUCTION LIVE STREAM &rarr; ]
+                </a>
+            </div>
 
             <div class="grid-container">
                 <div class="glass-panel project-card" data-target="aether-view">
@@ -651,8 +464,7 @@
                         <input type="text" id="weather-search" placeholder="SELECT OR TYPE CITY NODES..." autocomplete="off">
                         <span class="dropdown-arrow">&#9662;</span>
                     </div>
-                    <div id="weather-dropdown-list" class="atmo-dropdown-list">
-                        </div>
+                    <div id="weather-dropdown-list" class="atmo-dropdown-list"></div>
                 </div>
                 <span class="search-hint">CLICK TO CHOOSE OR ENTER A CUSTOM LOCATION</span>
                 <h2>Aether</h2>
@@ -769,19 +581,17 @@
     </div>
 
     <div id="golf-view" class="app-view">
-        <div class="gg-standalone-container">
-    <div class="orientation-guard-overlay">
-        <div class="guard-message">
-            <span>🔄</span>
-            <p>ROTATE DEVICE TO LANDSCAPE FOR ORBITAL TRACKING</p>
-        </div>
-    </div>
-    <canvas id="golf-canvas"></canvas>
         <div class="project-header">
             <button class="back-btn">&larr; Return to Portfolio</button>
             <span class="project-brand">PHYSICS // GRAVITATIONAL_ANOMALY</span>
         </div>
         <div class="gg-standalone-container">
+            <div class="orientation-guard-overlay">
+                <div class="guard-message">
+                    <span>🔄</span>
+                    <p>ROTATE DEVICE TO LANDSCAPE FOR ORBITAL TRACKING</p>
+                </div>
+            </div>
             <canvas id="golf-canvas"></canvas>
             <div class="golf-hud-overlay">
                 <h2>Gravity Golf</h2>
@@ -795,6 +605,7 @@
             </div>
         </div>
     </div>
+
     <div id="striker-view" class="app-view">
         <div class="project-header">
             <button class="back-btn">&larr; Return to Portfolio</button>
@@ -849,16 +660,14 @@
     <script>
         let currentAnimationLoopId = null;
         let aetherIntervalId = null;
-        // ==================================================== 
-        // EXPANDED HARDWARE AUDIO SYNTHESIS SUITE (WEB AUDIO)
-        // ==================================================== 
+        
         const AudioMatrix = {
             ctx: null,
             init() {
                 if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
                 if (this.ctx.state === 'suspended') this.ctx.resume();
             },
-            playTick() { // Snappy tactile mechanical typing tick
+            playTick() {
                 this.init();
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 osc.type = 'triangle'; osc.frequency.setValueAtTime(750, this.ctx.currentTime);
@@ -867,10 +676,10 @@
                 osc.connect(gain); gain.connect(this.ctx.destination);
                 osc.start(); osc.stop(this.ctx.currentTime + 0.015);
             },
-            playDynamicKey(char) { // Adaptive frequency mapping for Chroma keys
+            playDynamicKey(char) {
                 this.init();
                 const code = char.charCodeAt(0) || 65;
-                const freq = 220 + (code % 12) * 32.7; // Maps key coordinates onto a clean musical scale
+                const freq = 220 + (code % 12) * 32.7;
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 osc.type = 'sine'; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(freq * 0.5, this.ctx.currentTime + 0.1);
@@ -879,7 +688,7 @@
                 osc.connect(gain); gain.connect(this.ctx.destination);
                 osc.start(); osc.stop(this.ctx.currentTime + 0.1);
             },
-            playExplosion() { // High-energy discharge when data strings match
+            playExplosion() {
                 this.init();
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 osc.type = 'sawtooth'; osc.frequency.setValueAtTime(400, this.ctx.currentTime);
@@ -889,7 +698,7 @@
                 osc.connect(gain); gain.connect(this.ctx.destination);
                 osc.start(); osc.stop(this.ctx.currentTime + 0.14);
             },
-            playError() { // Structural buffer impact damage warning buzz
+            playError() {
                 this.init();
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, this.ctx.currentTime);
@@ -898,7 +707,7 @@
                 osc.connect(gain); gain.connect(this.ctx.destination);
                 osc.start(); osc.stop(this.ctx.currentTime + 0.15);
             },
-            playGameOver() { // Descending minor-third structural breakdown sequence
+            playGameOver() {
                 this.init(); const now = this.ctx.currentTime;
                 [160, 130, 95].forEach((freq, i) => {
                     const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
@@ -909,7 +718,7 @@
                     osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.35);
                 });
             },
-            playLaunch() { // Gravitational trajectory projection force surge
+            playLaunch() {
                 this.init();
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 osc.type = 'sine'; osc.frequency.setValueAtTime(140, this.ctx.currentTime);
@@ -919,7 +728,7 @@
                 osc.connect(gain); gain.connect(this.ctx.destination);
                 osc.start(); osc.stop(this.ctx.currentTime + 0.2);
             },
-            playWin() { // Radiant harmonic chime for vortex orbital capture
+            playWin() {
                 this.init(); const now = this.ctx.currentTime;
                 [261.63, 329.63, 392.00, 523.25].forEach((freq, i) => {
                     const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
@@ -930,7 +739,7 @@
                     osc.start(now + i * 0.06); osc.stop(now + i * 0.06 + 0.22);
                 });
             },
-            playThunder() { // Lowpass filtered environmental shock rumble
+            playThunder() {
                 this.init();
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 const filter = this.ctx.createBiquadFilter();
@@ -1000,9 +809,6 @@
             btn.addEventListener('click', () => switchView('home-view'));
         });
 
-        // ==================================================== 
-        // 01. AETHER ATMOSPHERIC TELEMETRY ENGINE (REAL-TIME PHASES)
-        // ==================================================== 
         function startAetherEngine() {
             const canvas = document.getElementById('aether-canvas'); if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -1020,15 +826,13 @@
             let elements = [];
             let windStreaks = [];
             let currentCondition = 'clear';
-            let isDay = 1;      // Telemetry Flag: 1 = Day, 0 = Night
-            let windSpeed = 0;  // Telemetry metric in km/h
+            let isDay = 1;
+            let windSpeed = 0;
 
             class AtmoParticle {
                 constructor() { this.reset(); this.y = Math.random() * canvas.height; }
                 reset() {
                     this.x = Math.random() * canvas.width; this.y = -20;
-                    
-                    // Incorporate live wind speeds into particle trajectories
                     this.baseWindX = windSpeed > 12 ? -(windSpeed * 0.12) : (Math.random() - 0.5) * 0.2;
                     
                     if (currentCondition === 'rain' || currentCondition === 'thunder') {
@@ -1046,7 +850,7 @@
                         this.vy = 0.1 + Math.random() * 0.3;
                         this.radius = 2.5 + Math.random() * 3.5; 
                         this.alpha = Math.random() * 0.08;
-                    } else { // Clear Sky Kinetic Dust Particle Elements
+                    } else {
                         this.vx = this.baseWindX + (Math.random() - 0.5) * 0.15; 
                         this.vy = (Math.random() - 0.5) * 0.15;
                         this.radius = 0.6 + Math.random() * 1.2; 
@@ -1185,14 +989,10 @@
                 run();
             }
 
-            // ==================================================== 
-            // SEARCH-SELECT COMBOBOX LIVE AUTOCOMPLETE ENGINE
-            // ==================================================== 
             const searchContainer = document.querySelector('.aether-search-select-container');
             const dropdownMenu = document.getElementById('weather-dropdown-list');
             let debounceTimer = null;
 
-            // Open selection drawer layout on user focus tap clicks
             searchInput.addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (dropdownMenu.children.length > 0) {
@@ -1201,11 +1001,8 @@
                 }
             });
 
-            // Stream input keywords: actively poll global indices as the user types
             searchInput.addEventListener('input', () => {
                 const currentStr = searchInput.value.trim().toLowerCase();
-                
-                // Keep memory light: clear preceding pending network tasks
                 clearTimeout(debounceTimer);
 
                 if (currentStr.length < 2) {
@@ -1215,13 +1012,12 @@
                     return;
                 }
 
-                // Debounce threshold (prevent layout spamming during key thrashes)
                 debounceTimer = setTimeout(async () => {
                     try {
                         const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(currentStr)}&count=6`);
                         const data = await res.json();
                         
-                        dropdownMenu.innerHTML = ''; // Wipe stale rows
+                        dropdownMenu.innerHTML = '';
 
                         if (data.results && data.results.length > 0) {
                             data.results.forEach(city => {
@@ -1235,7 +1031,6 @@
                                 itemNode.setAttribute('data-lon', city.longitude);
                                 itemNode.textContent = fullLocationLabel;
 
-                                // Link interaction listener right to the generated list rows
                                 itemNode.addEventListener('click', (e) => {
                                     e.stopPropagation();
                                     searchInput.value = city.name.toUpperCase();
@@ -1261,27 +1056,23 @@
                 }, 300);
             });
 
-            // Dismiss menu selections instantly when clicking anywhere on outer container spaces
             document.addEventListener('click', () => {
                 dropdownMenu.classList.remove('show');
                 searchContainer.classList.remove('active');
             });
 
-            // Catch Enter keyboard executions on manually typed inputs
             searchInput.onkeydown = async (e) => {
                 if (e.key === 'Enter' && searchInput.value.trim() !== '') {
                     const val = searchInput.value.trim();
                     dropdownMenu.classList.remove('show');
                     searchContainer.classList.remove('active');
                     
-                    // Fall back directly to the top auto-suggest index match if available
                     const firstSuggestion = dropdownMenu.querySelector('.atmo-dropdown-item:not([style*="pointer-events"])');
                     if (firstSuggestion) {
                         firstSuggestion.click();
                         return;
                     }
 
-                    // Direct endpoint geocoding query fallback sequence
                     terminateActiveAnimations();
                     stats.innerText = "Resolving terminal coordinate telemetry...";
                     try {
@@ -1294,20 +1085,15 @@
                 }
             };
 
-            // Master baseline startup trigger (Default: Thrissur location mapping axes)
             fetchMetrics(10.52, 76.21, "Thrissur");
         }
 
-        // ==================================================== 
-        // 02. CHROMA HARDWARE CUSTOMIZER LOGIC MATRIX (DYNAMIC AUDIO LINK)
-        // ==================================================== 
         function startChromaStudio() {
             const displayOutput = document.querySelector('.studio-status');
             const colors = ['#B0A171', '#00ff66', '#00e5ff', '#ff007f', '#ffaa00', '#7a00ff'];
             
             document.querySelectorAll('.kbd-key').forEach(key => {
                 key.onclick = () => {
-                    // Extract the raw hardware code attribute to modulate unique oscillator notes
                     const characterTag = key.getAttribute('data-key') || 'A';
                     AudioMatrix.playDynamicKey(characterTag); 
 
@@ -1321,9 +1107,6 @@
             });
         }
 
-        // ==================================================== 
-        // 03. TYPING DEFENDER: HYPER-KINETIC ARCADE SYSTEM (OVERHAULED)
-        // ==================================================== 
         function startTypingDefender() {
             const canvas = document.getElementById('typing-canvas'); if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -1334,7 +1117,6 @@
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
 
-            // Core Game Mechanics
             let score = 0; 
             let safetyIntegrity = 3; 
             let fallingWords = []; 
@@ -1342,7 +1124,6 @@
             let clockTicks = 0; 
             let sessionActive = true;
             
-            // New Arcade Juice Systems
             let currentCombo = 0;
             let currentLevel = 1;
             let screenShakeIntensity = 0;
@@ -1374,8 +1155,8 @@
                     if(this.y > canvas.height - 70) { 
                         if (typeof AudioMatrix !== 'undefined') AudioMatrix.playError();
                         safetyIntegrity--; 
-                        currentCombo = 0; // Break combo streak on damage
-                        screenShakeIntensity = 15; // Trigger impact shake
+                        currentCombo = 0;
+                        screenShakeIntensity = 15;
                         this.y = 99999; 
                     } 
                 }
@@ -1386,7 +1167,6 @@
                         ctx.font = 'bold 18px monospace';
                         ctx.shadowBlur = 15; ctx.shadowColor = '#ff0000';
                     } else {
-                        // Level based color shifts
                         ctx.fillStyle = currentLevel === 1 ? '#ff4444' : currentLevel === 2 ? '#ffaa00' : '#ff007f';
                         ctx.font = 'bold 14px monospace';
                     }
@@ -1415,26 +1195,23 @@
             function cycle() {
                 if (!sessionActive) return;
 
-                // Handle Screen Shake Engine
                 ctx.save();
                 if (screenShakeIntensity > 0) {
                     const dx = (Math.random() - 0.5) * screenShakeIntensity;
                     const dy = (Math.random() - 0.5) * screenShakeIntensity;
                     ctx.translate(dx, dy);
-                    screenShakeIntensity *= 0.9; // Decay shake
+                    screenShakeIntensity *= 0.9;
                     if (screenShakeIntensity < 0.5) screenShakeIntensity = 0;
                 }
 
                 ctx.fillStyle = 'rgba(5, 5, 5, 0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // Spawn engine calibration logic
                 clockTicks++;
                 const spawnInterval = Math.max(35, 90 - (currentLevel * 15));
                 if (clockTicks % spawnInterval === 0) {
                     fallingWords.push(new TargetString(Math.random() > 0.92 && currentLevel >= 2));
                 }
 
-                // Render Background Matrix HUD Metrics
                 ctx.fillStyle = 'rgba(255,255,255,0.02)';
                 ctx.font = 'bold 8vw monospace';
                 ctx.fillText(`LVL ${currentLevel}`, canvas.width/2 - 120, canvas.height/2 + 50);
@@ -1449,24 +1226,21 @@
                     if (s.alpha <= 0) blastSparks.splice(i, 1);
                 });
 
-                // Core Defensive HUD Base Line Indicator
                 ctx.fillStyle = `rgba(0, 229, 255, ${0.1 + (currentCombo * 0.05)})`;
                 ctx.fillRect(0, canvas.height - 65, canvas.width, 2);
 
-                // Render Live Combo Tracker
                 if (currentCombo > 2) {
                     ctx.fillStyle = '#00e5ff';
                     ctx.font = 'italic 12px monospace';
                     ctx.fillText(`STREAK STACK: ${currentCombo}x [STABLE]`, 30, canvas.height - 85);
                 }
 
-                // Render Player Safety Life Nodes
                 for(let i=0; i<3; i++) {
                     ctx.fillStyle = i < safetyIntegrity ? '#00ff66' : 'rgba(255,255,255,0.05)';
                     ctx.fillRect(canvas.width - 40 - (i * 20), 25, 12, 12);
                 }
 
-                ctx.restore(); // Stop screen shake encapsulation
+                ctx.restore();
 
                 if (safetyIntegrity <= 0) {
                     sessionActive = false; 
@@ -1485,7 +1259,6 @@
                     if (target.text === cleaned) {
                         if (typeof AudioMatrix !== 'undefined') AudioMatrix.playExplosion(); 
                         
-                        // Score calculation tied to custom combo tracking mechanics
                         currentCombo++;
                         const multiplier = Math.min(5, Math.floor(currentCombo / 3) + 1);
                         const pointsGained = (target.isBoss ? 500 : 100) * multiplier;
@@ -1493,14 +1266,12 @@
                         score += pointsGained; 
                         scoreLabel.innerText = String(score).padStart(4, '0');
                         
-                        // Level Up Logic Boundary
                         const targetLevel = Math.floor(score / 600) + 1;
                         if (targetLevel !== currentLevel) {
                             currentLevel = targetLevel;
-                            screenShakeIntensity = 8; // Flash impact blast level change
+                            screenShakeIntensity = 8;
                         }
 
-                        // Explode custom particles color keyed to word parameters
                         const sparksColor = target.isBoss ? '#ff4444' : multiplier > 2 ? '#ffaa00' : '#00e5ff';
                         for(let i=0; i<30; i++) {
                             blastSparks.push(new ExplosionSpark(target.x + 40, target.y, sparksColor));
@@ -1511,7 +1282,6 @@
                 });
             };
 
-            // Anti-home routing override control hook securely locked inside system logic
             const restartButton = document.getElementById('td-restart-btn');
             if (restartButton) {
                 restartButton.setAttribute('data-no-route', 'true');
@@ -1529,9 +1299,6 @@
             cycle();
         }
 
-        // ==================================================== 
-        // 04. GRAVITY GOLF: QUANTUM ANOMALY ARCADE SYSTEM (OVERHAULED)
-        // ==================================================== 
         function startGravityGolfPhysics() {
             const canvas = document.getElementById('golf-canvas'); if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -1541,24 +1308,20 @@
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
 
-            // Core Game Progress State Records
             let currentLevel = 1;
             let probesLeft = 5;
             let totalScore = 0;
             let calculateActive = true;
 
-            // Operational Simulation Vectors
             let targetNode = { x: canvas.width - 180, y: canvas.height / 2, r: 24 };
             let ballNode = { x: 120, y: canvas.height / 2, vx: 0, vy: 0, r: 6, launching: false };
             let dragControl = { active: false, startX: 0, startY: 0 };
             
-            // Arcade Juice Component Storage
             let probeTrail = [];
             let burstParticles = [];
             let asteroids = [];
             let spaceCrystals = [];
 
-            // Trigger structural generation matrix updates for individual level states
             function generateLevelLayout() {
                 probeTrail = [];
                 burstParticles = [];
@@ -1566,11 +1329,9 @@
                 ballNode.x = 120; ballNode.y = canvas.height / 2;
                 ballNode.vx = 0; ballNode.vy = 0;
 
-                // Randomize singularity placement safely inside boundary walls
                 targetNode.x = canvas.width * 0.5 + Math.random() * (canvas.width * 0.35);
                 targetNode.y = canvas.height * 0.2 + Math.random() * (canvas.height * 0.6);
 
-                // Build dynamic asteroid hazards based on current level progress
                 asteroids = [];
                 const hazardCount = Math.min(3, Math.floor(currentLevel / 2) + 1);
                 for (let i = 0; i < hazardCount; i++) {
@@ -1583,7 +1344,6 @@
                     });
                 }
 
-                // Scatter hyper-dense dark matter fragments for score boosts
                 spaceCrystals = [];
                 const crystalCount = 3;
                 for (let i = 0; i < crystalCount; i++) {
@@ -1646,22 +1406,19 @@
                 if (!calculateActive) return;
                 ctx.fillStyle = 'rgba(2, 2, 2, 0.25)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 1. Draw Core Event Horizon Swirl
                 ctx.save();
                 ctx.beginPath(); ctx.fillStyle = '#ffaa00';
                 ctx.shadowBlur = 25 + Math.sin(Date.now() * 0.005) * 5; ctx.shadowColor = '#ffaa00';
                 ctx.arc(targetNode.x, targetNode.y, targetNode.r, 0, Math.PI*2); ctx.fill();
                 ctx.restore();
 
-                // 2. Compute and Process Debris Obstacles
                 asteroids.forEach(ast => {
                     ast.y += ast.vy;
-                    if (ast.y - ast.r < 0 || ast.y + ast.r > canvas.height) ast.vy *= -1; // Bounce boundary walls
+                    if (ast.y - ast.r < 0 || ast.y + ast.r > canvas.height) ast.vy *= -1;
 
                     ctx.beginPath(); ctx.fillStyle = '#3a3a3a'; ctx.strokeStyle = 'rgba(255,255,255,0.1)';
                     ctx.lineWidth = 1.5; ctx.arc(ast.x, ast.y, ast.r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
 
-                    // Collision test against target probe strings
                     if (ballNode.launching) {
                         let dX = ast.x - ballNode.x; let dY = ast.y - ballNode.y;
                         if (Math.sqrt(dX*dX + dY*dY) < ast.r + ballNode.r) {
@@ -1674,14 +1431,12 @@
                     }
                 });
 
-                // 3. Render Collectible Elements
                 spaceCrystals.forEach(cry => {
                     if (!cry.active) return;
                     ctx.save(); ctx.shadowBlur = 10; ctx.shadowColor = 'var(--neon-cyan)';
                     ctx.beginPath(); ctx.fillStyle = 'var(--neon-cyan)';
                     ctx.arc(cry.x, cry.y, cry.r, 0, Math.PI*2); ctx.fill(); ctx.restore();
 
-                    // Probe suction checks
                     if (ballNode.launching) {
                         let dX = cry.x - ballNode.x; let dY = cry.y - ballNode.y;
                         if (Math.sqrt(dX*dX + dY*dY) < cry.r + ballNode.r + 5) {
@@ -1694,31 +1449,26 @@
                     }
                 });
 
-                // 4. Trace Flying Probe Trajectory Logic
                 if (ballNode.launching) {
                     let distanceX = targetNode.x - ballNode.x;
                     let distanceY = targetNode.y - ballNode.y;
                     let radiusDistance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
 
-                    // Capture Check Bounds Validation
                     if (radiusDistance < targetNode.r + 3) {
                         totalScore += 1000 * currentLevel;
-                        probesLeft = Math.min(7, probesLeft + 1); // Refund spent tracking fuel
+                        probesLeft = Math.min(7, probesLeft + 1);
                         triggerTerminalOverlay(true);
                         return;
                     }
 
-                    // Gravitational calculation mapping fields
                     let accelerationScale = (targetNode.r * 7.8) / (radiusDistance * radiusDistance);
                     ballNode.vx += (distanceX / radiusDistance) * accelerationScale;
                     ballNode.vy += (distanceY / radiusDistance) * accelerationScale;
                     ballNode.x += ballNode.vx; ballNode.y += ballNode.vy;
 
-                    // Append procedural cosmetic trail elements
                     probeTrail.push({ x: ballNode.x, y: ballNode.y });
                     if (probeTrail.length > 18) probeTrail.shift();
 
-                    // Handle Out Of Bounds Drops
                     if (ballNode.x < 0 || ballNode.x > canvas.width || ballNode.y < 0 || ballNode.y > canvas.height) {
                         if (typeof AudioMatrix !== 'undefined') AudioMatrix.playError();
                         probesLeft--;
@@ -1727,7 +1477,6 @@
                     }
                 }
 
-                // 5. Draw Motion Particles and System Elements
                 probeTrail.forEach((pt, index) => {
                     ctx.beginPath(); ctx.fillStyle = `rgba(0, 229, 255, ${index / probeTrail.length})`;
                     ctx.arc(pt.x, pt.y, ballNode.r * (index / probeTrail.length), 0, Math.PI*2); ctx.fill();
@@ -1741,7 +1490,6 @@
                 ctx.beginPath(); ctx.fillStyle = ballNode.launching ? '#00e5ff' : '#B0A171';
                 ctx.arc(ballNode.x, ballNode.y, ballNode.r, 0, Math.PI*2); ctx.fill();
 
-                // 6. Draw Predictive Orbit Lines on Active Drag Pulls
                 if (dragControl.active && !ballNode.launching) {
                     let simX = ballNode.x; let simY = ballNode.y;
                     let simVx = (dragControl.startX - activeMouseX) * 0.11;
@@ -1767,7 +1515,6 @@
                 currentAnimationLoopId = requestAnimationFrame(computePhysics);
             }
 
-            // Input Coordination Handlers
             canvas.onmousedown = (e) => {
                 if (ballNode.launching || !calculateActive) return;
                 dragControl.startX = e.clientX; dragControl.startY = e.clientY; dragControl.active = true;
@@ -1800,15 +1547,12 @@
             window.onmouseup = releaseLaunchEngine;
             window.addEventListener('touchend', releaseLaunchEngine, { passive: true });
 
-            // Hardened dynamic overlay click routing interceptor
             document.getElementById('gg-restart-btn').onclick = (e) => {
                 e.preventDefault(); e.stopImmediatePropagation();
 
                 if (probesLeft <= 0) {
-                    // Scenario A: Full player breakdown -> structural hard reset factory defaults
                     currentLevel = 1; probesLeft = 5; totalScore = 0;
                 } else {
-                    // Scenario B: Level win -> progress target values upward to next wave matrix
                     currentLevel++;
                 }
 
@@ -1822,15 +1566,10 @@
                 }
             };
 
-            // Bootstrap launch cycle parameters
             generateLevelLayout();
             computePhysics();
         }
 
-
-        // ==================================================== 
-        // 05. CYBER STRIKER ARCADE GAME ENGINE (SHOOTER MATRIX)
-        // ==================================================== 
         function startCyberStriker() {
             const canvas = document.getElementById('striker-canvas'); if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -1840,12 +1579,10 @@
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
 
-            // Runtime Game Arrays & Mechanics 
             let player = { x: canvas.width / 2, y: canvas.height - 100, w: 26, h: 26, shield: 3, weaponTier: 1 };
             let lasers = []; let enemies = []; let particles = []; let upgrades = []; let cosmicStars = [];
             let score = 0; let currentLevel = 1; let clockTicks = 0; let isSessionActive = true; let screenShake = 0;
 
-            // Generate scrolling background matrix stars
             for (let i = 0; i < 45; i++) {
                 cosmicStars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, speed: 0.5 + Math.random() * 2, size: 1 + Math.random() * 1.5 });
             }
@@ -1893,7 +1630,6 @@
                     ctx.fillRect(this.x, this.y, this.w, this.h);
                     ctx.strokeRect(this.x, this.y, this.w, this.h);
                     
-                    // Inside matrix layout data text strings
                     ctx.fillStyle = '#fff'; ctx.font = '9px monospace'; ctx.textAlign = 'center';
                     ctx.fillText(`${this.hp}•CORE`, this.x + this.w/2, this.y + 13);
                     ctx.restore();
@@ -1939,7 +1675,6 @@
             function cycleRunner() {
                 if (!isSessionActive) return;
 
-                // Handle screen shake logic transformations
                 ctx.save();
                 if (screenShake > 0) {
                     let dx = (Math.random() - 0.5) * screenShake;
@@ -1950,7 +1685,6 @@
 
                 ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 1. Move Background Stars
                 ctx.fillStyle = '#fff';
                 cosmicStars.forEach(s => {
                     s.y += s.speed; if (s.y > canvas.height) s.y = -5;
@@ -1959,18 +1693,15 @@
                 });
                 ctx.globalAlpha = 1.0;
 
-                // 2. Automate Projectile Laser Loops
                 clockTicks++;
                 if (clockTicks % 12 === 0) triggerWeaponFire();
                 if (clockTicks % Math.max(20, 50 - currentLevel * 5) === 0) enemies.push(new CodeEnemy());
 
-                // 3. Process Lasers
                 lasers.forEach((l, lIdx) => {
                     l.update(); l.draw();
                     if (l.y < -10) lasers.splice(lIdx, 1);
                 });
 
-                // 4. Process Power Upgrade Crystals
                 upgrades.forEach((u, uIdx) => {
                     u.update(); u.draw();
                     let dX = u.x - player.x; let dY = u.y - player.y;
@@ -1984,11 +1715,9 @@
                     }
                 });
 
-                // 5. Process Enemies & Check Collision Nodes
                 enemies.forEach((e, eIdx) => {
                     e.update(); e.draw();
 
-                    // Check if player crashes directly into enemy code box
                     let pDistX = Math.abs(e.x + e.w/2 - player.x);
                     let pDistY = Math.abs(e.y + e.h/2 - player.y);
                     if (pDistX < (e.w/2 + player.w/2) && pDistY < (e.h/2 + player.h/2)) {
@@ -1998,7 +1727,6 @@
                         enemies.splice(eIdx, 1);
                     }
 
-                    // Check if laser tags enemy matrix boundaries
                     lasers.forEach((l, lIdx) => {
                         if (l.x >= e.x && l.x <= e.x + e.w && l.y >= e.y && l.y <= e.y + e.h) {
                             lasers.splice(lIdx, 1); e.hp--;
@@ -2018,7 +1746,6 @@
                         }
                     });
 
-                    // Handle enemy falling off edge boundaries below base integrity lines
                     if (e.y > canvas.height + 20) {
                         if (typeof AudioMatrix !== 'undefined') AudioMatrix.playError();
                         player.shield--; player.weaponTier = Math.max(1, player.weaponTier - 1);
@@ -2028,25 +1755,22 @@
                     }
                 });
 
-                // 6. Process Burst Particles
                 particles.forEach((p, pIdx) => {
                     p.update(); p.draw();
                     if (p.alpha <= 0) particles.splice(pIdx, 1);
                 });
 
-                // 7. Render Player Spacecraft (Sleek Minimalist Triangle Structure)
                 ctx.save();
                 ctx.translate(player.x, player.y);
                 ctx.beginPath(); ctx.fillStyle = player.weaponTier === 3 ? '#ff007f' : '#B0A171';
                 ctx.shadowBlur = 15; ctx.shadowColor = ctx.fillStyle;
                 ctx.moveTo(0, -16); ctx.lineTo(-14, 14); ctx.lineTo(14, 14); ctx.closePath(); ctx.fill();
                 
-                // Draw trust fire exhaust particles dynamically behind core engine
                 ctx.fillStyle = Math.random() > 0.5 ? '#ffaa00' : '#ff4444';
                 ctx.fillRect(-4, 15, 8, 4 + Math.random() * 6);
                 ctx.restore();
 
-                ctx.restore(); // Terminate screen shake canvas state encapsulation
+                ctx.restore();
 
                 if (player.shield <= 0) {
                     isSessionActive = false;
@@ -2058,7 +1782,6 @@
                 }
             }
 
-            // Sync user coordinate drag trajectories across device tracking fields
             const trackFighterPosition = (clientX) => {
                 const rect = canvas.getBoundingClientRect();
                 let relativeX = clientX - rect.left;
@@ -2070,7 +1793,6 @@
                 if (isSessionActive && e.touches.length > 0) trackFighterPosition(e.touches[0].clientX);
             }, { passive: true });
 
-            // Hardened dynamic overlay click interceptor reset logic loop setup
             const rebootActionBtn = document.getElementById('cs-restart-btn');
             rebootActionBtn.setAttribute('data-no-route', 'true');
             rebootActionBtn.onclick = (e) => {
@@ -2083,9 +1805,6 @@
             cycleRunner();
         }
 
-        // ==================================================== 
-        // 06. CERTIFICATE MODAL DISPLAY ENGINE
-        // ==================================================== 
         function openCertificateMatrix(type) {
             const modal = document.getElementById('certificate-modal');
             const targetImage = document.getElementById('modal-document-target');
@@ -2131,9 +1850,6 @@
             });
         });
 
-        // ==================================================== 
-        // 06. GLYPH MATRIX: UNIFIED DUAL-MODE ANIMATION LAB
-        // ==================================================== 
         function startGlyphMatrixLab() {
             const canvas = document.getElementById('glyph-canvas'); if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -2250,11 +1966,8 @@
             });
 
             renderMatrixLoop();
-        } // Fixed: Structural function brace closure successfully added
+        }
 
-        // ==================================================== 
-        // 07. UNIFIED KINETIC INTERACTION & SMOOTH TRACKING MOTOR
-        // ==================================================== 
         function launchVisualFXEngine() {
             const canvas = document.getElementById('interaction-canvas'); if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -2351,7 +2064,6 @@
             }
 
             window.addEventListener('mousedown', (e) => injectSplashPulse(e.clientX, e.clientY));
-            
             window.addEventListener('touchstart', (e) => {
                 if (e.touches && e.touches.length > 0) {
                     injectSplashPulse(e.touches[0].clientX, e.touches[0].clientY);
