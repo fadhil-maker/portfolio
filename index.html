@@ -2090,81 +2090,34 @@
             renderMatrixLoop();
         }
 
-        
-    const dot = document.querySelector('.custom-cursor');
-    const ring = document.querySelector('.cursor-follower');
-    const canvas = document.getElementById('interaction-canvas');
-    const ctx = canvas.getContext('2d');
+        const dot = document.querySelector('.custom-cursor');
+        const ring = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let dotX = 0, dotY = 0;
+        let ringX = 0, ringY = 0;
 
-    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    let dotX = window.innerWidth / 2, dotY = window.innerHeight / 2;
-    let ringX = window.innerWidth / 2, ringY = window.innerHeight / 2;
-    let particles = [];
-
-    // Setup Canvas
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-
-    window.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    // Particle Class
-    class Particle {
-        constructor(x, y) {
-            this.x = x; this.y = y;
-            const angle = Math.random() * Math.PI * 2;
-            const force = 0.5 + Math.random() * 1.5;
-            this.vx = Math.cos(angle) * force;
-            this.vy = Math.sin(angle) * force;
-            this.radius = 2 + Math.random() * 3;
-            this.life = 1.0;
-            this.decay = 0.02 + Math.random() * 0.02;
-        }
-        update() { this.x += this.vx; this.y += this.vy; this.life -= this.decay; }
-        draw() {
-            ctx.beginPath();
-            ctx.fillStyle = `rgba(176, 161, 113, ${this.life * 0.7})`;
-            ctx.arc(this.x, this.y, this.radius * this.life, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    // Unified Master Loop
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // 1. Move Cursor
-        dotX = mouseX;
-        dotY = mouseY;
-        ringX += (mouseX - ringX) * 0.15;
-        ringY += (mouseY - ringY) * 0.15;
-
-        dot.style.left = dotX + 'px';
-        dot.style.top = dotY + 'px';
-        ring.style.left = ringX + 'px';
-        ring.style.top = ringY + 'px';
-
-        // 2. Generate Particles
-        if (Math.random() > 0.3) {
-            particles.push(new Particle(mouseX, mouseY));
-        }
-
-        // 3. Render Particles
-        particles.forEach((p, i) => {
-            p.update(); p.draw();
-            if(p.life <= 0) particles.splice(i, 1);
+        window.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        requestAnimationFrame(animate);
-    }
-    animate();
+        function animate() {
+            // Instant snap for dot
+            dotX = mouseX;
+            dotY = mouseY;
+            
+            // Smooth lag for ring
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
 
+            dot.style.left = dotX + 'px';
+            dot.style.top = dotY + 'px';
+            ring.style.left = ringX + 'px';
+            ring.style.top = ringY + 'px';
+
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 
 
