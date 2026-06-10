@@ -294,27 +294,28 @@
             .orientation-guard-overlay { display: flex; }
         }
         /* ==================================================== */
-/* 09. FORCED LANDSCAPE SCALING FOR MOBILE viewports   */
+/* 09. FORCED IMMERSIVE MOBILE LANDSCAPE OVERRIDES     */
 /* ==================================================== */
 @media (max-width: 768px) and (orientation: portrait) {
-    /* Auto-rotate arcade interfaces to simulate horizontal views on upright screens */
-    body.immersive-mode-active #golf-view,
-    body.immersive-mode-active #typing-view,
-    body.immersive-mode-active #striker-view {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vh !important;
-        height: 100vw !important;
-        transform: rotate(90deg);
-        transform-origin: top left;
-        y: 0;
-        x: 0;
-        left: 100vw; /* Shift rotated canvas coordinate system back into device viewport bounds */
+    /* Instantly twist active arcade views sideways on upright viewports */
+    body.immersive-mode-active #golf-view.active,
+    body.immersive-mode-active #typing-view.active,
+    body.immersive-mode-active #striker-view.active {
+        position: fixed !important;
+        top: 0 !important;
+        left: 100vw !important; /* Offsets origin matrix after rotation */
+        width: 100vh !important;  /* Mobile height becomes landscape width */
+        height: 100vw !important; /* Mobile width becomes landscape height */
+        transform: rotate(90deg) !important;
+        transform-origin: top left !important;
+        z-index: 99999 !important;
+        overflow: hidden !important;
     }
-    
-    /* Ensure canvas matrices scale layout sizes perfectly across inverted metrics */
-    body.immersive-mode-active canvas {
+
+    /* Force canvases to claim full layout allocations cleanly */
+    body.immersive-mode-active #golf-view canvas,
+    body.immersive-mode-active #typing-view canvas,
+    body.immersive-mode-active #striker-view canvas {
         width: 100% !important;
         height: 100% !important;
     }
@@ -817,37 +818,39 @@ async function switchView(targetViewId) {
         targetView.classList.add('active');
         window.scrollTo(0, 0); 
         
-        // ====================================================
-        // AUTOMATIC NATIVE LANDSCAPE ORIENTATION DRIVER
-        // ====================================================
         const arcadeViews = ['golf-view', 'typing-view', 'striker-view'];
         
         if (arcadeViews.includes(targetViewId)) {
             document.body.classList.add('immersive-mode-active');
             
-            // Try forcing the phone screen to auto-rotate horizontally
+            // Try forcing the phone screen to auto-rotate horizontally natively
             if (screen.orientation && screen.orientation.lock) {
                 try {
                     await screen.orientation.lock('landscape');
                 } catch (err) {
-                    console.log("Hardware orientation lock waiting for an explicit touch gesture.");
+                    console.log("Hardware lock deferred to CSS backup transform.");
                 }
             }
         } else {
             document.body.classList.remove('immersive-mode-active');
-            // Re-release screen rotation control when going back to the main layout
             if (screen.orientation && screen.orientation.unlock) {
                 screen.orientation.unlock();
             }
         }
         
-        // 4. Safely initialize engines only when their specific view mounts
-        if (targetViewId === 'aether-view') startAetherEngine();
-        else if (targetViewId === 'chroma-view') startChromaStudio();
-        else if (targetViewId === 'typing-view') startTypingDefender();
-        else if (targetViewId === 'golf-view') startGravityGolfPhysics();
-        else if (targetViewId === 'striker-view') startCyberStriker();
-        else if (targetViewId === 'glyph-view') startGlyphMatrixLab();
+        // ====================================================
+        // FIXED: ELIMINATE RACE CONDITIONS VIA TIMING PAUSE
+        // ====================================================
+        // Delaying initialization ensures the canvas reads the updated 
+        // horizontal bounding values after the CSS rotation has rendered.
+        setTimeout(() => {
+            if (targetViewId === 'aether-view') startAetherEngine();
+            else if (targetViewId === 'chroma-view') startChromaStudio();
+            else if (targetViewId === 'typing-view') startTypingDefender();
+            else if (targetViewId === 'golf-view') startGravityGolfPhysics();
+            else if (targetViewId === 'striker-view') startCyberStriker();
+            else if (targetViewId === 'glyph-view') startGlyphMatrixLab();
+        }, 60); 
     }
 }
 
