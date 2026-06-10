@@ -4,15 +4,15 @@
     <meta name="description" content="Portfolio of Muhammed Fadhil EH: Full-Stack Web Engineer specializing in Python, Django, and interactive browser physics modules.">
     
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:url" content="https://muhammedfadhil.vercel.app/">
     <meta property="og:title" content="MUHAMMED FADHIL EH | Software Engineer">
     <meta property="og:description" content="Explore interactive software sandboxes, atmospheric telemetry simulations, and core engineering architecture.">
-    <meta property="og:image" content="https://yourdomain.com/assets/hero.jpg">
+    <meta property="og:image" content="https://muhammedfadhil.vercel.app/assets/hero.jpg">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MUHAMMED FADHIL EH | Software Engineer">
     <meta name="twitter:description" content="Explore interactive software sandboxes and full-stack engine deployments.">
-    <meta name="twitter:image" content="https://yourdomain.com/assets/hero.jpg">
+    <meta name="twitter:image" content="https://muhammedfadhil.vercel.app/assets/hero.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUHAMMED FADHIL EH | Software Engineer</title>
@@ -203,7 +203,7 @@
         .gm-controls h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 400; margin-bottom: 0.5rem; }
         .gm-controls p { font-size: 0.85rem; opacity: 0.5; margin-bottom: 2rem; line-height: 1.5; }
         .custom-file-upload { display: block; text-align: center; font-family: monospace; font-size: 0.8rem; background: transparent; border: 1px dashed var(--accent); color: var(--accent); padding: 1.2rem; cursor: pointer; transition: 0.3s; margin-bottom: 1.5rem; letter-spacing: 1px; }
-        .custom-file-upload:hover { background: rgba(176, 161, 113, 0.05); color: #fff; border-color: #fff; border-color: #fff; }
+        .custom-file-upload:hover { background: rgba(176, 161, 113, 0.05); color: #fff; border-color: #fff; }
         .gm-selectors { display: flex; gap: 0.6rem; }
         .gm-style-btn { flex: 1; background: #121212; border: 1px solid var(--glass-border); color: var(--pearl); padding: 0.8rem; font-family: monospace; font-size: 0.75rem; cursor: pointer; transition: 0.2s; letter-spacing: 1px; }
         .gm-style-btn:hover, .gm-style-btn.active { background: var(--accent); color: #050505; border-color: var(--accent); font-weight: 600; }
@@ -221,16 +221,46 @@
 
         #interaction-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 99999; }
 
+        /* PREMIUM DUAL-NODE CUSTOM CURSOR SYSTEM Styles */
         @media (min-width: 769px) {
             body, a, button, .project-card, .glass-panel { cursor: none !important; }
-        }
-
-        .custom-cursor, .cursor-follower { position: fixed; top: 0; left: 0; pointer-events: none; border-radius: 50%; z-index: 100000; transform: translate(-50%, -50%); display: none; }
-
-        @media (min-width: 769px) {
-            .custom-cursor { display: block; width: 6px; height: 6px; background: var(--accent); }
-            .cursor-follower { display: block; width: 26px; height: 26px; border: 1px solid rgba(176, 161, 113, 0.4); transition: transform 0.2s cubic-bezier(0.215, 0.610, 0.355, 1), background 0.2s, border-color 0.2s; }
-            .pointer-hover-active { transform: translate(-50%, -50%) scale(1.4); background: rgba(176, 161, 113, 0.12); border-color: var(--accent); }
+            
+            .custom-cursor { 
+                display: block; 
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 6px; 
+                height: 6px; 
+                background: var(--accent); 
+                pointer-events: none;
+                border-radius: 50%;
+                z-index: 100000;
+                transform: translate(-50%, -50%);
+                will-change: left, top;
+            }
+            
+            .cursor-follower { 
+                display: block; 
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 26px; 
+                height: 26px; 
+                border: 1px solid rgba(176, 161, 113, 0.4); 
+                pointer-events: none;
+                border-radius: 50%;
+                z-index: 100000;
+                transform: translate(-50%, -50%);
+                will-change: left, top;
+                transition: transform 0.2s cubic-bezier(0.215, 0.610, 0.355, 1), background 0.2s, border-color 0.2s; 
+            }
+            
+            .pointer-hover-active { 
+                transform: translate(-50%, -50%) scale(1.4); 
+                background: rgba(176, 161, 113, 0.12); 
+                border-color: var(--accent); 
+            }
         }
 
         .scroll-cue { position: absolute; bottom: 4vh; left: 8vw; display: flex; align-items: center; gap: 1rem; opacity: 0.3; }
@@ -291,7 +321,7 @@
             height: 100vh;
             background: #050505;
             z-index: 200000;
-            display: none; /* Hidden by default on desktop/landscape */
+            display: none; 
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -330,7 +360,6 @@
             100% { transform: rotate(0deg); }
         }
 
-        /* Actively trip the screen block ONLY when a landscape-locked view is mounted in portrait mode */
         @media (max-width: 768px) and (orientation: portrait) {
             body.landscape-lock-active .orientation-guard {
                 display: flex !important;
@@ -341,14 +370,12 @@
         /* 10. MOBILE LANDSCAPE SCREEN REAL-ESTATE OPTIMIZATION */
         /* ==================================================== */
         @media (max-width: 932px) and (orientation: landscape) {
-            /* 1. Vaporize long descriptive paragraphs that block the canvas */
             .golf-hud-overlay p,
             #cs-hud p,
             .app-desc-meta {
                 display: none !important;
             }
 
-            /* 2. Compress Gravity Golf HUD into a tight single horizontal line */
             .golf-hud-overlay {
                 top: 12px !important;
                 left: 3vw !important;
@@ -374,17 +401,15 @@
                 padding-left: 1.2rem;
             }
 
-            /* 3. Compress Cyber Striker HUD text layout */
             #cs-hud {
                 top: 12px !important;
                 left: auto !important;
                 right: 3vw !important;
             }
             #cs-hud h2 {
-                display: none !important; /* Hide giant game title in shooter mode to see enemies */
+                display: none !important; 
             }
 
-            /* 4. Shrink the nav header to maximize vertical gameplay viewports */
             .project-header {
                 height: 50px !important;
             }
@@ -396,14 +421,12 @@
                 font-size: 0.75rem !important;
             }
 
-            /* Re-calculate game bounds for the shrunken header height */
             .project-standalone-container,
             .td-standalone-container,
             .gg-standalone-container {
                 height: calc(100vh - 50px) !important;
             }
         }
-        
     </style>
 </head>
 <body>
@@ -882,7 +905,6 @@
             }
         }
 
-        // Central Router: Handles seamless screen transitions, loops cleanup, and orientation states
         function switchView(targetViewId) {
             terminateActiveAnimations();
             document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active'));
@@ -899,21 +921,16 @@
                     document.body.classList.remove('immersive-mode-active');
                 }
 
-                // ====================================================
-                // SPECIFIC LANDSCAPE CONSTRAINT LOCK
-                // ====================================================
                 if (targetViewId === 'golf-view') {
                     document.body.classList.add('landscape-lock-active');
                 } else {
                     document.body.classList.remove('landscape-lock-active');
                 }
                 
-                // Fire stable interface engine configurations
                 if (targetViewId === 'aether-view') startAetherEngine();
                 else if (targetViewId === 'chroma-view') startChromaStudio();
                 else if (targetViewId === 'glyph-view') startGlyphMatrixLab();
                 else if (arcadeViews.includes(targetViewId)) {
-                    // Inject delayed layout pause to ensure dimensions clear before canvas ignition
                     setTimeout(() => {
                         if (targetViewId === 'typing-view') startTypingDefender();
                         else if (targetViewId === 'golf-view') startGravityGolfPhysics();
@@ -2092,7 +2109,7 @@
         }
 
         // ==================================================== 
-        // 07. FIXED KINETIC INTERACTION ENGINE
+        // 07. RESTORED PREMIUM LIQUID INTERACTION ENGINE & CURSOR
         // ==================================================== 
         function launchVisualFXEngine() {
             const canvas = document.getElementById('interaction-canvas'); if (!canvas) return;
@@ -2126,10 +2143,12 @@
                     firstMove = false;
                 }
 
+                // LIQUID CIRCLE TRAIL: Injects smooth fluid circular drift trails
                 if (Math.random() > 0.35) { 
                     activeCircles.push(new KineticCircle(e.clientX, e.clientY));
                 }
 
+                // LUMINOUS GLASS SHIELD RADIAL GLOW
                 const interactiveCard = e.target.closest('.project-card, .glass-panel');
                 if (interactiveCard) {
                     const rect = interactiveCard.getBoundingClientRect();
@@ -2158,18 +2177,18 @@
                     const force = 0.4 + Math.random() * 1.6;
                     this.vx = Math.cos(vectorAngle) * force;
                     this.vy = Math.sin(vectorAngle) * force;
-                    this.maxRadius = 3 + Math.random() * 4;
+                    this.maxRadius = 3 + Math.random() * 4; 
                     this.life = 1.0; 
-                    this.decay = 0.018 + Math.random() * 0.015;
+                    this.decay = 0.018 + Math.random() * 0.015; 
                 }
                 process() {
                     this.x += this.vx; this.y += this.vy;
-                    this.vx *= 0.96; this.vy *= 0.96;
+                    this.vx *= 0.96; this.vy *= 0.96; 
                     this.life -= this.decay;
                 }
                 draw() {
                     ctx.beginPath();
-                    ctx.fillStyle = `rgba(176, 161, 113, ${this.life * 0.7})`;
+                    ctx.fillStyle = `rgba(176, 161, 113, ${this.life * 0.7})`; 
                     ctx.arc(this.x, this.y, this.maxRadius * this.life, 0, Math.PI * 2);
                     ctx.fill();
                 }
@@ -2195,7 +2214,7 @@
                 for(let i=0; i<10; i++) activeCircles.push(new KineticCircle(x, y));
             }
 
-            // SNAP-CENTER POSITION POINTER
+            // PERFECT ALIGNMENT HARDWARE COUPLER
             function updatePointers() {
                 dotX = targetX;
                 dotY = targetY;
@@ -2244,10 +2263,9 @@
             executeMasterLoop();
         }
 
-        // Initialize the single engine
         launchVisualFXEngine();
 
-        // --- FIXED: RESIZE PROTECTION PIPELINE ---
+        // --- STABLE RESIZE RUNTIME PROTECTOR ---
         window.addEventListener('resize', () => {
             const activeView = document.querySelector('.app-view.active');
             if (!activeView) return;
@@ -2279,8 +2297,5 @@
             <p>Please switch your device to landscape orientation to enter the arcade sandbox arena.</p>
         </div>
     </div>
-    <div class="custom-cursor">
-    <div class="cursor-dot"></div>
-</div>
 </body>
 </html>
