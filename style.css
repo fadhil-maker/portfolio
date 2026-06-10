@@ -1,0 +1,303 @@
+/* --- VARIABLES --- */
+:root {
+    --obsidian: #050505;
+    --pearl: #EAEAEA;
+    --accent: #B0A171; /* Brushed Gold Accent */
+    --glass: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--obsidian);
+    color: var(--pearl);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* --- HERO SECTION --- */
+#hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 8vw;
+    gap: 4vw;
+}
+
+.hero-left {
+    flex: 1.2;
+}
+
+.hero-right {
+    flex: 0.8;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sculptural-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 5.5vw;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    font-weight: 400;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.hero-summary {
+    margin: 2.5rem 0;
+    max-width: 500px;
+    font-size: 1.1rem;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.luxury-link {
+    color: var(--pearl);
+    text-decoration: none;
+    margin-right: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 2px;
+    transition: all 0.3s;
+}
+
+.luxury-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* --- CINEMATIC PORTRAIT BLEND --- */
+.image-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: var(--obsidian);
+    
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%),
+                        linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%),
+                linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+}
+
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.15) brightness(0.85);
+    display: block;
+}
+
+.image-vignette {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 40%, rgba(5,5,5,0) 20%, rgba(5,5,5,0.7) 70%, rgba(5,5,5,1) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- SECTIONS & LAYOUT --- */
+.section-container {
+    padding: 6vw 8vw;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* --- GLASSMORPHISM PANELS --- */
+.glass-panel {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 2.5rem;
+    border-radius: 4px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(176, 161, 113, 0.4);
+    transform: translateY(-4px);
+}
+
+.glass-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.panel-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.project-desc {
+    opacity: 0.7;
+    max-width: 700px;
+    margin-bottom: 1.5rem;
+}
+
+.tech-stack-used {
+    font-size: 0.85rem;
+    font-family: monospace;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+.role-title {
+    font-size: 0.95rem;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- HIGHLIGHTED WIDE PANEL --- */
+.wide-panel {
+    grid-column: 1 / -1;
+    margin-bottom: 1.5rem;
+}
+
+.highlighted-project {
+    border-left: 2px solid var(--accent);
+}
+
+.project-card {
+    cursor: pointer;
+}
+
+/* --- ACADEMIC TIMELINE --- */
+.timeline {
+    border-left: 1px solid var(--glass-border);
+    padding-left: 2rem;
+}
+
+.timeline-item {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-2rem - 4px);
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    background-color: var(--accent);
+    border-radius: 50%;
+}
+
+.timeline-meta {
+    font-size: 0.95rem;
+    opacity: 0.6;
+    margin-top: 0.25rem;
+}
+
+/* --- PHASE 2: STATE ROUTER STYLES --- */
+
+.app-view {
+    display: none; /* Hides everything by default */
+    width: 100vw;
+    min-height: 100vh;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.app-view.active {
+    display: block; /* Only shows the view with the "active" class */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- STANDALONE PROJECT HEADER --- */
+.project-header {
+    height: 70px;
+    width: 100vw;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4vw;
+    background: #0a0a0a;
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.back-btn:hover {
+    background: var(--accent);
+    color: var(--obsidian);
+}
+
+.project-brand {
+    font-family: monospace;
+    color: var(--pearl);
+    opacity: 0.4;
+    letter-spacing: 2px;
+}
+
+.blank-canvas {
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.blank-canvas h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.blank-canvas p {
+    font-family: monospace;
+    color: var(--accent);
+    opacity: 0.7;
+}
