@@ -2109,7 +2109,7 @@
         }
 
         // ==================================================== 
-        // 07. RESTORED PREMIUM LIQUID INTERACTION ENGINE & CURSOR
+        // 07. RESTORED PREMIUM LIQUID INTERACTION ENGINE & CURSOR [FIXED]
         // ==================================================== 
         function launchVisualFXEngine() {
             const canvas = document.getElementById('interaction-canvas'); if (!canvas) return;
@@ -2125,30 +2125,25 @@
                 canvas.width = width; canvas.height = height;
             });
 
-            let targetX = 0, targetY = 0;
-            let dotX = 0, dotY = 0;
-            let ringX = 0, ringY = 0;
-            let firstMove = true;
+            // Set default placement to center of screen so it doesn't snap from (0,0)
+            let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2;
+            let dotX = window.innerWidth / 2, dotY = window.innerHeight / 2;
+            let ringX = window.innerWidth / 2, ringY = window.innerHeight / 2;
             
             let activeShockwaves = [];
             let activeCircles = []; 
 
+            // Track movement globally across the document window
             window.addEventListener('mousemove', (e) => {
                 targetX = e.clientX;
                 targetY = e.clientY;
 
-                if (firstMove) {
-                    dotX = targetX; dotY = targetY;
-                    ringX = targetX; ringY = targetY;
-                    firstMove = false;
-                }
-
-                // LIQUID CIRCLE TRAIL: Injects smooth fluid circular drift trails
+                // PREMIUM LIQUID TRAIL: Drops fading circles when moving your hand
                 if (Math.random() > 0.35) { 
                     activeCircles.push(new KineticCircle(e.clientX, e.clientY));
                 }
 
-                // LUMINOUS GLASS SHIELD RADIAL GLOW
+                // Glass-morphism card reflection spotlight
                 const interactiveCard = e.target.closest('.project-card, .glass-panel');
                 if (interactiveCard) {
                     const rect = interactiveCard.getBoundingClientRect();
@@ -2164,7 +2159,8 @@
                     targetX = e.touches[0].clientX;
                     targetY = e.touches[0].clientY;
                     
-                    if (Math.random() > 0.4) {
+                    // Mobile finger tracking circle generator
+                    if (Math.random() > 0.3) {
                         activeCircles.push(new KineticCircle(e.touches[0].clientX, e.touches[0].clientY));
                     }
                 }
@@ -2214,10 +2210,13 @@
                 for(let i=0; i<10; i++) activeCircles.push(new KineticCircle(x, y));
             }
 
-            // PERFECT ALIGNMENT HARDWARE COUPLER
+            // UNIFIED TRACKING POSITION CALCULATOR
             function updatePointers() {
+                // Pin inner dot 1:1 onto target coordinates instantly
                 dotX = targetX;
                 dotY = targetY;
+
+                // Linear interpolation creates the luxury fluid drag lag on the outer circle
                 ringX += (targetX - ringX) * 0.15; 
                 ringY += (targetY - ringY) * 0.15;
 
@@ -2233,7 +2232,7 @@
 
             function executeMasterLoop() {
                 ctx.clearRect(0, 0, width, height);
-                updatePointers();
+                updatePointers(); // Keep running pointer updates smoothly
 
                 activeShockwaves.forEach((wave, idx) => {
                     wave.process(); wave.draw();
@@ -2262,30 +2261,6 @@
 
             executeMasterLoop();
         }
-
-        launchVisualFXEngine();
-
-        // --- STABLE RESIZE RUNTIME PROTECTOR ---
-        window.addEventListener('resize', () => {
-            const activeView = document.querySelector('.app-view.active');
-            if (!activeView) return;
-            
-            if (['typing-view', 'golf-view', 'striker-view'].includes(activeView.id)) {
-                terminateActiveAnimations();
-                
-                if (activeView.id === 'typing-view') startTypingDefender();
-                else if (activeView.id === 'golf-view') startGravityGolfPhysics();
-                else if (activeView.id === 'striker-view') startCyberStriker();
-            }
-        });
-        // 1. Select your elements
-const cursor = document.querySelector('.custom-cursor');
-const follower = document.querySelector('.cursor-follower');
-
-// 2. Initial variables (ensure these match your existing code)
-let dotX = 0, dotY = 0;
-let ringX = 0, ringY = 0;
-let targetX = 0, targetY = 0;
 
 // 3. The Animation Loop (The "Heartbeat")
 function animate() {
