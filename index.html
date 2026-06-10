@@ -403,6 +403,24 @@
                 height: calc(100vh - 50px) !important;
             }
         }
+        /* Hide default cursor on the game container */
+.game-container {
+    cursor: none; 
+}
+
+/* The custom cursor element */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    background-color: #00ffcc; /* Matches your arcade aesthetic */
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Crucial: lets clicks pass through to game elements */
+    z-index: 9999;
+    will-change: transform; /* Optimize for GPU acceleration */
+}
     </style>
 </head>
 <body>
@@ -2201,6 +2219,35 @@
         }
 
         launchVisualFXEngine();
+        const cursor = document.querySelector('.custom-cursor');
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+
+// The speed of the following (0.1 is smooth/slow, 0.5 is fast/tight)
+const speed = 0.2; 
+
+// Update target coordinates
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+function animateCursor() {
+    // Linear Interpolation (Lerp)
+    // Formula: current + (target - current) * speed
+    cursorX += (mouseX - cursorX) * speed;
+    cursorY += (mouseY - cursorY) * speed;
+
+    // Apply the position
+    cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
+
+    requestAnimationFrame(animateCursor);
+}
+
+// Start the loop
+requestAnimationFrame(animateCursor);
 
         // --- FIXED: RESIZE PROTECTION PIPELINE ---
         window.addEventListener('resize', () => {
