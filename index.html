@@ -403,24 +403,7 @@
                 height: calc(100vh - 50px) !important;
             }
         }
-        /* Hide default cursor on the game container */
-.game-container {
-    cursor: none; 
-}
-
-/* The custom cursor element */
-.custom-cursor {
-    width: 20px;
-    height: 20px;
-    background-color: #00ffcc; /* Matches your arcade aesthetic */
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none; /* Crucial: lets clicks pass through to game elements */
-    z-index: 9999;
-    will-change: transform; /* Optimize for GPU acceleration */
-}
+        
     </style>
 </head>
 <body>
@@ -2109,181 +2092,160 @@
         }
 
         // ==================================================== 
-// 07. RESTORED CIRCULAR KINETIC INTERACTION ENGINE
-// ==================================================== 
-function launchVisualFXEngine() {
-    const canvas = document.getElementById('interaction-canvas'); if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const dotPointer = document.querySelector('.custom-cursor');
-    const ringFollower = document.querySelector('.cursor-follower');
+        // 07. FIXED KINETIC INTERACTION ENGINE
+        // ==================================================== 
+        function launchVisualFXEngine() {
+            const canvas = document.getElementById('interaction-canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dotPointer = document.querySelector('.custom-cursor');
+            const ringFollower = document.querySelector('.cursor-follower');
 
-    let width = window.innerWidth; let height = window.innerHeight;
-    canvas.width = width; canvas.height = height;
+            let width = window.innerWidth; let height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
 
-    window.addEventListener('resize', () => {
-        width = window.innerWidth; height = window.innerHeight;
-        canvas.width = width; canvas.height = height;
-    });
+            window.addEventListener('resize', () => {
+                width = window.innerWidth; height = window.innerHeight;
+                canvas.width = width; canvas.height = height;
+            });
 
-    let targetX = 0, targetY = 0;
-    let dotX = 0, dotY = 0;
-    let ringX = 0, ringY = 0;
-    
-    let activeShockwaves = [];
-    let activeCircles = []; // Fixed: Restored to circular matrix arrays
-
-    window.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-
-        // 1. LIQUID CIRCLE TRAIL: Injects smooth fading circles on movement
-        if (Math.random() > 0.35) { 
-            activeCircles.push(new KineticCircle(e.clientX, e.clientY));
-        }
-
-        // 2. LUMINOUS GLASS GLOW: Updates CSS spotlight coordinates
-        const interactiveCard = e.target.closest('.project-card, .glass-panel');
-        if (interactiveCard) {
-            const rect = interactiveCard.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            interactiveCard.style.setProperty('--mouse-x', `${x}px`);
-            interactiveCard.style.setProperty('--mouse-y', `${y}px`);
-        }
-    });
-
-    // Mobile touch tracking configuration
-    window.addEventListener('touchmove', (e) => {
-        if (e.touches && e.touches.length > 0) {
-            targetX = e.touches[0].clientX;
-            targetY = e.touches[0].clientY;
+            let targetX = 0, targetY = 0;
+            let dotX = 0, dotY = 0;
+            let ringX = 0, ringY = 0;
+            let firstMove = true;
             
-            if (Math.random() > 0.4) {
-                activeCircles.push(new KineticCircle(e.touches[0].clientX, e.touches[0].clientY));
+            let activeShockwaves = [];
+            let activeCircles = []; 
+
+            window.addEventListener('mousemove', (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+
+                if (firstMove) {
+                    dotX = targetX; dotY = targetY;
+                    ringX = targetX; ringY = targetY;
+                    firstMove = false;
+                }
+
+                if (Math.random() > 0.35) { 
+                    activeCircles.push(new KineticCircle(e.clientX, e.clientY));
+                }
+
+                const interactiveCard = e.target.closest('.project-card, .glass-panel');
+                if (interactiveCard) {
+                    const rect = interactiveCard.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    interactiveCard.style.setProperty('--mouse-x', `${x}px`);
+                    interactiveCard.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches && e.touches.length > 0) {
+                    targetX = e.touches[0].clientX;
+                    targetY = e.touches[0].clientY;
+                    
+                    if (Math.random() > 0.4) {
+                        activeCircles.push(new KineticCircle(e.touches[0].clientX, e.touches[0].clientY));
+                    }
+                }
+            }, { passive: true });
+
+            class KineticCircle {
+                constructor(x, y) {
+                    this.x = x; this.y = y;
+                    const vectorAngle = Math.random() * Math.PI * 2;
+                    const force = 0.4 + Math.random() * 1.6;
+                    this.vx = Math.cos(vectorAngle) * force;
+                    this.vy = Math.sin(vectorAngle) * force;
+                    this.maxRadius = 3 + Math.random() * 4;
+                    this.life = 1.0; 
+                    this.decay = 0.018 + Math.random() * 0.015;
+                }
+                process() {
+                    this.x += this.vx; this.y += this.vy;
+                    this.vx *= 0.96; this.vy *= 0.96;
+                    this.life -= this.decay;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(176, 161, 113, ${this.life * 0.7})`;
+                    ctx.arc(this.x, this.y, this.maxRadius * this.life, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
+
+            class GeometricShockwave {
+                constructor(x, y) {
+                    this.x = x; this.y = y; this.radius = 1; this.alpha = 0.7;
+                }
+                process() {
+                    this.radius += 2.5;
+                    this.alpha -= 0.025;
+                }
+                draw() {
+                    ctx.beginPath(); ctx.lineWidth = 1;
+                    ctx.strokeStyle = `rgba(176, 161, 113, ${this.alpha})`;
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.stroke();
+                }
+            }
+
+            function injectSplashPulse(x, y) {
+                activeShockwaves.push(new GeometricShockwave(x, y));
+                for(let i=0; i<10; i++) activeCircles.push(new KineticCircle(x, y));
+            }
+
+            // SNAP-CENTER POSITION POINTER
+            function updatePointers() {
+                dotX = targetX;
+                dotY = targetY;
+                ringX += (targetX - ringX) * 0.15; 
+                ringY += (targetY - ringY) * 0.15;
+
+                if(dotPointer) {
+                    dotPointer.style.left = `${dotX}px`;
+                    dotPointer.style.top = `${dotY}px`;
+                }
+                if(ringFollower) {
+                    ringFollower.style.left = `${ringX}px`;
+                    ringFollower.style.top = `${ringY}px`;
+                }
+            }
+
+            function executeMasterLoop() {
+                ctx.clearRect(0, 0, width, height);
+                updatePointers();
+
+                activeShockwaves.forEach((wave, idx) => {
+                    wave.process(); wave.draw();
+                    if(wave.alpha <= 0) activeShockwaves.splice(idx, 1);
+                });
+
+                activeCircles.forEach((circle, idx) => {
+                    circle.process(); circle.draw();
+                    if(circle.life <= 0) activeCircles.splice(idx, 1);
+                });
+
+                requestAnimationFrame(executeMasterLoop);
+            }
+
+            window.addEventListener('mousedown', (e) => injectSplashPulse(e.clientX, e.clientY));
+            window.addEventListener('touchstart', (e) => {
+                if (e.touches && e.touches.length > 0) {
+                    injectSplashPulse(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            });
+
+            document.querySelectorAll('a, button, .project-card, .certificate-card').forEach(node => {
+                node.addEventListener('mouseenter', () => ringFollower?.classList.add('pointer-hover-active'));
+                node.addEventListener('mouseleave', () => ringFollower?.classList.remove('pointer-hover-active'));
+            });
+
+            executeMasterLoop();
         }
-    }, { passive: true });
 
-    // --- RESTORED: FLUID CIRCLE CLASS COMPONENT ---
-    class KineticCircle {
-        constructor(x, y) {
-            this.x = x; this.y = y;
-            const vectorAngle = Math.random() * Math.PI * 2;
-            const force = 0.4 + Math.random() * 1.6;
-            this.vx = Math.cos(vectorAngle) * force;
-            this.vy = Math.sin(vectorAngle) * force;
-            this.maxRadius = 3 + Math.random() * 4; // Soft premium sizing
-            this.life = 1.0; 
-            this.decay = 0.018 + Math.random() * 0.015; // Smooth fading lifecycle
-        }
-        process() {
-            this.x += this.vx; this.y += this.vy;
-            this.vx *= 0.96; this.vy *= 0.96; // Fluid friction slowing down
-            this.life -= this.decay;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.fillStyle = `rgba(176, 161, 113, ${this.life * 0.7})`; // Semi-transparent gold aura
-            // Scales circle radius down organically as its life decays
-            ctx.arc(this.x, this.y, this.maxRadius * this.life, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    class GeometricShockwave {
-        constructor(x, y) {
-            this.x = x; this.y = y; this.radius = 1; this.alpha = 0.7;
-        }
-        process() {
-            this.radius += 2.5;
-            this.alpha -= 0.025;
-        }
-        draw() {
-            ctx.beginPath(); ctx.lineWidth = 1;
-            ctx.strokeStyle = `rgba(176, 161, 113, ${this.alpha})`;
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.stroke();
-        }
-    }
-
-    function injectSplashPulse(x, y) {
-        activeShockwaves.push(new GeometricShockwave(x, y));
-        for(let i=0; i<10; i++) activeCircles.push(new KineticCircle(x, y));
-    }
-
-    function executeMasterLoop() {
-        ctx.clearRect(0, 0, width, height);
-        updatePointers();
-
-        activeShockwaves.forEach((wave, idx) => {
-            wave.process(); wave.draw();
-            if(wave.alpha <= 0) activeShockwaves.splice(idx, 1);
-        });
-
-        activeCircles.forEach((circle, idx) => {
-            circle.process(); circle.draw();
-            if(circle.life <= 0) activeCircles.splice(idx, 1);
-        });
-
-        requestAnimationFrame(executeMasterLoop);
-    }
-
-    function updatePointers() {
-        dotX += (targetX - dotX) * 0.24;
-        dotY += (targetY - dotY) * 0.24;
-        ringX += (targetX - ringX) * 0.12; 
-        ringY += (targetY - ringY) * 0.12;
-
-        if(dotPointer) dotPointer.style.left = `${dotX}px`;
-        if(dotPointer) dotPointer.style.top = `${dotY}px`;
-        if(ringFollower) ringFollower.style.left = `${ringX}px`;
-        if(ringFollower) ringFollower.style.top = `${ringY}px`;
-    }
-
-    window.addEventListener('mousedown', (e) => injectSplashPulse(e.clientX, e.clientY));
-    window.addEventListener('touchstart', (e) => {
-        if (e.touches && e.touches.length > 0) {
-            injectSplashPulse(e.touches[0].clientX, e.touches[0].clientY);
-        }
-    });
-
-    document.querySelectorAll('a, button, .project-card, .certificate-card').forEach(node => {
-        node.addEventListener('mouseenter', () => ringFollower?.classList.add('pointer-hover-active'));
-        node.addEventListener('mouseleave', () => ringFollower?.classList.remove('pointer-hover-active'));
-    });
-
-    executeMasterLoop();
-}
-
+        // Initialize the single engine
         launchVisualFXEngine();
-        const cursor = document.querySelector('.custom-cursor');
-let mouseX = 0;
-let mouseY = 0;
-let cursorX = 0;
-let cursorY = 0;
-
-// The speed of the following (0.1 is smooth/slow, 0.5 is fast/tight)
-const speed = 0.2; 
-
-// Update target coordinates
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-function animateCursor() {
-    // Linear Interpolation (Lerp)
-    // Formula: current + (target - current) * speed
-    cursorX += (mouseX - cursorX) * speed;
-    cursorY += (mouseY - cursorY) * speed;
-
-    // Apply the position
-    cursor.style.transform = `translate3d(${cursorX - 10}px, ${cursorY - 10}px, 0)`;
-
-    requestAnimationFrame(animateCursor);
-}
-
-// Start the loop
-requestAnimationFrame(animateCursor);
 
         // --- FIXED: RESIZE PROTECTION PIPELINE ---
         window.addEventListener('resize', () => {
@@ -2317,5 +2279,8 @@ requestAnimationFrame(animateCursor);
             <p>Please switch your device to landscape orientation to enter the arcade sandbox arena.</p>
         </div>
     </div>
+    <div class="custom-cursor">
+    <div class="cursor-dot"></div>
+</div>
 </body>
 </html>
