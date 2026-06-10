@@ -2278,6 +2278,42 @@
                 else if (activeView.id === 'striker-view') startCyberStriker();
             }
         });
+        // 1. Select your elements
+const cursor = document.querySelector('.custom-cursor');
+const follower = document.querySelector('.cursor-follower');
+
+// 2. Initial variables (ensure these match your existing code)
+let dotX = 0, dotY = 0;
+let ringX = 0, ringY = 0;
+let targetX = 0, targetY = 0;
+
+// 3. The Animation Loop (The "Heartbeat")
+function animate() {
+    // Smooth interpolation (Lerp)
+    // The '0.2' is the speed. Lower = more sluggish, Higher = more snappy
+    dotX += (targetX - dotX) * 0.4; 
+    dotY += (targetY - dotY) * 0.4;
+    
+    // Smooth trailing follower (The larger circle)
+    ringX += (targetX - ringX) * 0.15;
+    ringY += (targetY - ringY) * 0.15;
+
+    // Apply to DOM
+    if (cursor) {
+        cursor.style.left = `${dotX}px`;
+        cursor.style.top = `${dotY}px`;
+    }
+    
+    if (follower) {
+        follower.style.left = `${ringX}px`;
+        follower.style.top = `${ringY}px`;
+    }
+
+    requestAnimationFrame(animate);
+}
+
+// 4. Start the engine
+animate();
     </script>
 
     <div id="certificate-modal" class="modal-overlay" onclick="closeCertificateMatrix()">
