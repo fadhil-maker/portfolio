@@ -203,7 +203,7 @@
         .gm-controls h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 400; margin-bottom: 0.5rem; }
         .gm-controls p { font-size: 0.85rem; opacity: 0.5; margin-bottom: 2rem; line-height: 1.5; }
         .custom-file-upload { display: block; text-align: center; font-family: monospace; font-size: 0.8rem; background: transparent; border: 1px dashed var(--accent); color: var(--accent); padding: 1.2rem; cursor: pointer; transition: 0.3s; margin-bottom: 1.5rem; letter-spacing: 1px; }
-        .custom-file-upload:hover { background: rgba(176, 161, 113, 0.05); color: #fff; border-color: #fff; }
+        .custom-file-upload:hover { background: rgba(176, 161, 113, 0.05); color: #fff; border-color: #fff; border-color: #fff; }
         .gm-selectors { display: flex; gap: 0.6rem; }
         .gm-style-btn { flex: 1; background: #121212; border: 1px solid var(--glass-border); color: var(--pearl); padding: 0.8rem; font-family: monospace; font-size: 0.75rem; cursor: pointer; transition: 0.2s; letter-spacing: 1px; }
         .gm-style-btn:hover, .gm-style-btn.active { background: var(--accent); color: #050505; border-color: var(--accent); font-weight: 600; }
@@ -280,46 +280,129 @@
             #cs-score-readout { display: block !important; font-size: 0.7rem !important; margin-top: 4px !important; color: var(--accent) !important; letter-spacing: 0.5px !important; }
         }
 
-        .orientation-guard-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #020202; z-index: 999; display: none; align-items: center; justify-content: center; }
-        .guard-message { text-align: center; font-family: monospace; color: var(--accent); font-size: 0.75rem; letter-spacing: 1.5px; }
-        .guard-message span { font-size: 2rem; display: block; margin-bottom: 10px; animation: rotatePulse 2s infinite ease-in-out; }
+        /* ==================================================== */
+        /* 09. IMMERSIVE ARCADE ORIENTATION GUARD SYSTEM        */
+        /* ==================================================== */
+        .orientation-guard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #050505;
+            z-index: 200000;
+            display: none; /* Hidden by default on desktop/landscape */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
 
-        @keyframes rotatePulse {
+        .guard-content h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin: 1.5rem 0 0.5rem 0;
+            letter-spacing: 1px;
+        }
+
+        .guard-content p {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--pearl);
+            opacity: 0.5;
+            max-width: 280px;
+            line-height: 1.6;
+            margin: 0 auto;
+        }
+
+        .rotate-icon {
+            font-size: 3.5rem;
+            color: var(--accent);
+            display: inline-block;
+            animation: kineticRotationHint 2.6s infinite ease-in-out;
+        }
+
+        @keyframes kineticRotationHint {
             0% { transform: rotate(0deg); }
-            50% { transform: rotate(-90deg); }
+            40% { transform: rotate(-90deg); }
+            70% { transform: rotate(-90deg); }
             100% { transform: rotate(0deg); }
         }
 
+        /* Actively trip the screen block only when an arcade view is mounted in portrait mode */
         @media (max-width: 768px) and (orientation: portrait) {
-            .orientation-guard-overlay { display: flex; }
+            body.immersive-mode-active .orientation-guard {
+                display: flex !important;
+            }
         }
-        /* ==================================================== */
-/* 09. FORCED IMMERSIVE MOBILE LANDSCAPE OVERRIDES     */
-/* ==================================================== */
-@media (max-width: 768px) and (orientation: portrait) {
-    /* Instantly twist active arcade views sideways on upright viewports */
-    body.immersive-mode-active #golf-view.active,
-    body.immersive-mode-active #typing-view.active,
-    body.immersive-mode-active #striker-view.active {
-        position: fixed !important;
-        top: 0 !important;
-        left: 100vw !important; /* Offsets origin matrix after rotation */
-        width: 100vh !important;  /* Mobile height becomes landscape width */
-        height: 100vw !important; /* Mobile width becomes landscape height */
-        transform: rotate(90deg) !important;
-        transform-origin: top left !important;
-        z-index: 99999 !important;
-        overflow: hidden !important;
-    }
 
-    /* Force canvases to claim full layout allocations cleanly */
-    body.immersive-mode-active #golf-view canvas,
-    body.immersive-mode-active #typing-view canvas,
-    body.immersive-mode-active #striker-view canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-}
+        /* ==================================================== */
+        /* 10. MOBILE LANDSCAPE SCREEN REAL-ESTATE OPTIMIZATION */
+        /* ==================================================== */
+        @media (max-width: 932px) and (orientation: landscape) {
+            /* 1. Vaporize long descriptive paragraphs that block the canvas */
+            .golf-hud-overlay p,
+            #cs-hud p,
+            .app-desc-meta {
+                display: none !important;
+            }
+
+            /* 2. Compress Gravity Golf HUD into a tight single horizontal line */
+            .golf-hud-overlay {
+                top: 12px !important;
+                left: 3vw !important;
+                max-width: none !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 1.2rem !important;
+                pointer-events: none !important;
+                z-index: 1000 !important;
+            }
+
+            .golf-hud-overlay h2 {
+                font-size: 1.2rem !important;
+                margin-bottom: 0 !important;
+                line-height: 1 !important;
+                letter-spacing: 0px !important;
+            }
+
+            .golf-score {
+                font-size: 0.75rem !important;
+                color: var(--accent) !important;
+                border-left: 1px solid var(--glass-border);
+                padding-left: 1.2rem;
+            }
+
+            /* 3. Compress Cyber Striker HUD text layout */
+            #cs-hud {
+                top: 12px !important;
+                left: auto !important;
+                right: 3vw !important;
+            }
+            #cs-hud h2 {
+                display: none !important; /* Hide giant game title in shooter mode to see enemies */
+            }
+
+            /* 4. Shrink the nav header to maximize vertical gameplay viewports */
+            .project-header {
+                height: 50px !important;
+            }
+            .project-brand {
+                font-size: 0.7rem !important;
+            }
+            .back-btn {
+                padding: 0.3rem 0.8rem !important;
+                font-size: 0.75rem !important;
+            }
+
+            /* Re-calculate game bounds for the shrunken header height */
+            .project-standalone-container,
+            .td-standalone-container,
+            .gg-standalone-container {
+                height: calc(100vh - 50px) !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -613,12 +696,6 @@
             <span class="project-brand">PHYSICS // GRAVITATIONAL_ANOMALY</span>
         </div>
         <div class="gg-standalone-container">
-            <div class="orientation-guard-overlay">
-                <div class="guard-message">
-                    <span>🔄</span>
-                    <p>ROTATE DEVICE TO LANDSCAPE FOR ORBITAL TRACKING</p>
-                </div>
-            </div>
             <canvas id="golf-canvas"></canvas>
             <div class="golf-hud-overlay">
                 <h2>Gravity Golf</h2>
@@ -745,7 +822,7 @@
                     osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.35);
                 });
             },
-            playLaunch() {
+            playPaperLaunch() {
                 this.init();
                 const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
                 osc.type = 'sine'; osc.frequency.setValueAtTime(140, this.ctx.currentTime);
@@ -805,54 +882,36 @@
         }
 
         // Central Router: Handles seamless screen transitions, loops cleanup, and orientation states
-async function switchView(targetViewId) {
-    // 1. Terminate any active animation frames or weather intervals safely
-    terminateActiveAnimations();
+        function switchView(targetViewId) {
+            terminateActiveAnimations();
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active'));
 
-    // 2. Hide all view containers by removing the 'active' class
-    document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active'));
-
-    // 3. Mount the target view screen
-    const targetView = document.getElementById(targetViewId);
-    if (targetView) {
-        targetView.classList.add('active');
-        window.scrollTo(0, 0); 
-        
-        const arcadeViews = ['golf-view', 'typing-view', 'striker-view'];
-        
-        if (arcadeViews.includes(targetViewId)) {
-            document.body.classList.add('immersive-mode-active');
-            
-            // Try forcing the phone screen to auto-rotate horizontally natively
-            if (screen.orientation && screen.orientation.lock) {
-                try {
-                    await screen.orientation.lock('landscape');
-                } catch (err) {
-                    console.log("Hardware lock deferred to CSS backup transform.");
+            const targetView = document.getElementById(targetViewId);
+            if (targetView) {
+                targetView.classList.add('active');
+                window.scrollTo(0, 0); 
+                
+                const arcadeViews = ['golf-view', 'typing-view', 'striker-view'];
+                if (arcadeViews.includes(targetViewId)) {
+                    document.body.classList.add('immersive-mode-active');
+                } else {
+                    document.body.classList.remove('immersive-mode-active');
+                }
+                
+                // Fire stable interface engine configurations
+                if (targetViewId === 'aether-view') startAetherEngine();
+                else if (targetViewId === 'chroma-view') startChromaStudio();
+                else if (targetViewId === 'glyph-view') startGlyphMatrixLab();
+                else if (arcadeViews.includes(targetViewId)) {
+                    // Inject delayed layout pause to ensure dimensions clear before canvas ignition
+                    setTimeout(() => {
+                        if (targetViewId === 'typing-view') startTypingDefender();
+                        else if (targetViewId === 'golf-view') startGravityGolfPhysics();
+                        else if (targetViewId === 'striker-view') startCyberStriker();
+                    }, 60);
                 }
             }
-        } else {
-            document.body.classList.remove('immersive-mode-active');
-            if (screen.orientation && screen.orientation.unlock) {
-                screen.orientation.unlock();
-            }
         }
-        
-        // ====================================================
-        // FIXED: ELIMINATE RACE CONDITIONS VIA TIMING PAUSE
-        // ====================================================
-        // Delaying initialization ensures the canvas reads the updated 
-        // horizontal bounding values after the CSS rotation has rendered.
-        setTimeout(() => {
-            if (targetViewId === 'aether-view') startAetherEngine();
-            else if (targetViewId === 'chroma-view') startChromaStudio();
-            else if (targetViewId === 'typing-view') startTypingDefender();
-            else if (targetViewId === 'golf-view') startGravityGolfPhysics();
-            else if (targetViewId === 'striker-view') startCyberStriker();
-            else if (targetViewId === 'glyph-view') startGlyphMatrixLab();
-        }, 60); 
-    }
-}
 
         document.querySelectorAll('.project-card').forEach(card => {
             card.addEventListener('click', () => switchView(card.getAttribute('data-target')));
@@ -1104,7 +1163,7 @@ async function switchView(targetViewId) {
                             dropdownMenu.classList.add('show');
                         }
                     } catch (err) {
-                        console.error("Autocomplete routing failure:", err);
+                        console.error("Autocomplete failure:", err);
                     }
                 }, 300);
             });
@@ -1133,7 +1192,7 @@ async function switchView(targetViewId) {
                         const gData = await geo.json();
                         if (gData.results && gData.results.length > 0) {
                             fetchMetrics(gData.results[0].latitude, gData.results[0].longitude, gData.results[0].name);
-                        } else { stats.innerText = "TELEMETRY ERROR: DESTINATION LINK CODES UNRESOLVED"; run(); }
+                        } else { stats.innerText = "TELEMETRY ERROR: CODES UNRESOLVED"; run(); }
                     } catch(err) { stats.innerText = "ROUTER NETWORK ERROR: CONNECTION REFUSED"; run(); }
                 }
             };
@@ -1594,7 +1653,7 @@ async function switchView(targetViewId) {
                 ballNode.vx = (dragControl.startX - activeMouseX) * 0.11;
                 ballNode.vy = (dragControl.startY - activeMouseY) * 0.11;
                 ballNode.launching = true; 
-                if (typeof AudioMatrix !== 'undefined') AudioMatrix.playLaunch();
+                if (typeof AudioMatrix !== 'undefined') AudioMatrix.playPaperLaunch();
             };
 
             window.onmouseup = releaseLaunchEngine;
@@ -1783,6 +1842,7 @@ async function switchView(targetViewId) {
                     lasers.forEach((l, lIdx) => {
                         if (l.x >= e.x && l.x <= e.x + e.w && l.y >= e.y && l.y <= e.y + e.h) {
                             lasers.splice(lIdx, 1); e.hp--;
+                            if (typeof AudioMatrix !== 'undefined') AudioMatrix.playTick();
                             for (let i = 0; i < 4; i++) particles.push(new KineticParticle(l.x, l.y, '#00e5ff'));
                             
                             if (e.hp <= 0) {
@@ -2134,19 +2194,18 @@ async function switchView(targetViewId) {
         launchVisualFXEngine();
 
         // --- FIXED: RESIZE PROTECTION PIPELINE ---
-window.addEventListener('resize', () => {
-    const activeView = document.querySelector('.app-view.active');
-    if (!activeView) return;
-    
-    // Only rebuild engines if the user is actively viewing a game canvas
-    if (['typing-view', 'golf-view', 'striker-view'].includes(activeView.id)) {
-        terminateActiveAnimations(); // Securely kill the old running animation loop first
-        
-        if (activeView.id === 'typing-view') startTypingDefender();
-        else if (activeView.id === 'golf-view') startGravityGolfPhysics();
-        else if (activeView.id === 'striker-view') startCyberStriker();
-    }
-});
+        window.addEventListener('resize', () => {
+            const activeView = document.querySelector('.app-view.active');
+            if (!activeView) return;
+            
+            if (['typing-view', 'golf-view', 'striker-view'].includes(activeView.id)) {
+                terminateActiveAnimations();
+                
+                if (activeView.id === 'typing-view') startTypingDefender();
+                else if (activeView.id === 'golf-view') startGravityGolfPhysics();
+                else if (activeView.id === 'striker-view') startCyberStriker();
+            }
+        });
     </script>
 
     <div id="certificate-modal" class="modal-overlay" onclick="closeCertificateMatrix()">
@@ -2159,5 +2218,12 @@ window.addEventListener('resize', () => {
         </div>
     </div>
 
+    <div class="orientation-guard">
+        <div class="guard-content">
+            <div class="rotate-icon">&#10227;</div>
+            <h2>ROTATE YOUR DEVICE</h2>
+            <p>Please switch your device to landscape orientation to enter the arcade sandbox arena.</p>
+        </div>
+    </div>
 </body>
 </html>
