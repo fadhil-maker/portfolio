@@ -328,6 +328,65 @@
             50.1% { transform: scaleX(1); transform-origin: right; }
             100% { transform: scaleX(0.3); transform-origin: right; }
         }
+        /* ==================================================== */
+/* 08. ADVANCED MOBILE RESPONSIVE ENGINE OVERRIDES     */
+/* ==================================================== */
+@media (max-width: 768px) {
+    /* Stop horizontal layout shifting */
+    .app-view, .project-standalone-container, .td-standalone-container, .gg-standalone-container {
+        width: 100% !important;
+        max-width: 100vw !important;
+    }
+
+    /* 1. GLYPH MATRIX MOBILE RE-FLOW */
+    .gm-workspace {
+        flex-direction: column !important; /* Stacks controls on top of canvas */
+        gap: 1rem !important;
+        padding: 0 2vw;
+    }
+    .gm-controls {
+        max-width: 100% !important;
+        padding: 1.5rem !important;
+    }
+    .gm-canvas-frame {
+        min-height: 320px !important;
+        height: 45vh !important;
+        width: 100% !important;
+    }
+
+    /* 2. SAVING VERTICAL CANVAS SPACE FOR MOBILE GAMES */
+    .golf-hud-overlay p, .app-desc-meta {
+        display: none !important; /* Hides long instruction text so games have space */
+    }
+    .golf-hud-overlay h2, .app-title-header {
+        font-size: 1.4rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+    .golf-hud-overlay {
+        top: 15px !important;
+        left: 4vw !important;
+    }
+
+    /* 3. CHROMA VIRTUAL HARDWARE MATRIX SCALING */
+    .keyboard-chassis {
+        padding: 0.6rem !important;
+        gap: 0.2rem !important;
+    }
+    .kbd-key {
+        height: 32px !important;
+        font-size: 0.6rem !important;
+    }
+
+    /* 4. TYPING DEFENDER TERMINAL ADJUSTMENT */
+    .arcade-hud {
+        padding: 1rem !important;
+        margin-bottom: 1vh !important;
+    }
+    .terminal-input-wrapper input {
+        padding: 0.7rem !important;
+        font-size: 0.95rem !important;
+    }
+}
     </style>
 </head>
 <body>
