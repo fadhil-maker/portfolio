@@ -102,32 +102,32 @@
             </div>
 
             <div class="grid-container">
-                <div class="glass-panel project-card" data-target="aether-view">
+                <div class="glass-panel project-card" data-target="aether-view" tabindex="0" role="button" aria-label="Open Aether View">
                     <span class="panel-tag">Application</span>
                     <h3>"Aether"</h3>
                     <p>Ambient atmospheric telemetry simulator featuring Rain, Mist, Snow, and Thunder.</p>
                 </div>
-                <div class="glass-panel project-card" data-target="chroma-view">
+                <div class="glass-panel project-card" data-target="chroma-view" tabindex="0" role="button" aria-label="Open Chroma Studio">
                     <span class="panel-tag">Application</span>
                     <h3>"Chroma"</h3>
                     <p>Interactive mechanical keyboard customizer managing hardware state logic arrays.</p>
                 </div>
-                <div class="glass-panel project-card" data-target="typing-view">
+                <div class="glass-panel project-card" data-target="typing-view" tabindex="0" role="button" aria-label="Open Typing Defender">
                     <span class="panel-tag">Arcade Module</span>
                     <h3>Typing Defender</h3>
                     <p>Neon canvas shooter game running data destruction physics loops.</p>
                 </div>
-                <div class="glass-panel project-card" data-target="golf-view">
+                <div class="glass-panel project-card" data-target="golf-view" tabindex="0" role="button" aria-label="Open Gravity Golf">
                     <span class="panel-tag">Arcade Module</span>
                     <h3>Gravity Golf</h3>
                     <p>2D physics gravitational orbital launch calculator mapping trajectory curves.</p>
                 </div>
-                <div class="glass-panel project-card" data-target="striker-view">
+                <div class="glass-panel project-card" data-target="striker-view" tabindex="0" role="button" aria-label="Open Cyber Striker">
                     <span class="panel-tag">Arcade Game</span>
                     <h3>Cyber Striker</h3>
                     <p>Neon vertical space shooter featuring procedural enemy code grids, weapon upgrade drops, and chain explosions.</p>
                 </div>
-                <div class="glass-panel project-card" data-target="glyph-view">
+                <div class="glass-panel project-card" data-target="glyph-view" tabindex="0" role="button" aria-label="Open Glyph Matrix">
                     <span class="panel-tag">Digital Sandbox</span>
                     <h3>"Glyph Matrix"</h3>
                     <p>Image processing engine. Upload visual source materials to deconstruct graphics into active dot-matrix or text arrays.</p>
@@ -397,15 +397,29 @@
             },
             playDynamicKey(char) {
                 this.init();
-                const code = char.charCodeAt(0) || 65;
-                const freq = 220 + (code % 12) * 32.7;
-                const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(freq * 0.5, this.ctx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.1);
-                osc.connect(gain); gain.connect(this.ctx.destination);
-                osc.start(); osc.stop(this.ctx.currentTime + 0.1);
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                const filter = this.ctx.createBiquadFilter();
+                
+                // Mechanical keyboard "thock" sound design
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.05);
+                
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(800, this.ctx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.05);
+                
+                gain.gain.setValueAtTime(0, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.15, this.ctx.currentTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.ctx.destination);
+                
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.06);
             },
             playExplosion() {
                 this.init();
@@ -1048,12 +1062,15 @@
             let dragControl = { active: false, startX: 0, startY: 0 };
             
             let probeTrail = [];
+            let fullPathHistory = [];
+            let ghostTrail = [];
             let burstParticles = [];
             let asteroids = [];
             let spaceCrystals = [];
 
             function generateLevelLayout() {
                 probeTrail = [];
+                fullPathHistory = [];
                 burstParticles = [];
                 ballNode.launching = false;
                 ballNode.x = 120; ballNode.y = canvas.height / 2;
@@ -1151,9 +1168,10 @@
 
                     if (ballNode.launching) {
                         let dX = ast.x - ballNode.x; let dY = ast.y - ballNode.y;
-                        if (Math.sqrt(dX*dX + dY*dY) < ast.r + ballNode.r) {
+                        let dist = Math.sqrt(dX*dX + dY*dY);
+                        if (dist < ast.r + ballNode.r) {
                             if (typeof AudioMatrix !== 'undefined') AudioMatrix.playError();
-                            for(let i=0; i<20; i++) burstParticles.push(new ShockwaveParticle(ballNode.x, ballNode.y, '#ff4444'));
+                            ghostTrail = [...fullPathHistory];
                             probesLeft--;
                             if (probesLeft <= 0) triggerTerminalOverlay(false);
                             else generateLevelLayout();
@@ -1185,7 +1203,10 @@
                     let radiusDistance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
 
                     if (radiusDistance < targetNode.r + 3) {
-                        totalScore += 1000 * currentLevel;
+                        if (typeof AudioMatrix !== 'undefined') AudioMatrix.playWin();
+                        totalScore += (probesLeft * 50);
+                        currentLevel++;
+                        ghostTrail = [];
                         probesLeft = Math.min(7, probesLeft + 1);
                         triggerTerminalOverlay(true);
                         return;
@@ -1197,14 +1218,30 @@
                     ballNode.x += ballNode.vx; ballNode.y += ballNode.vy;
 
                     probeTrail.push({ x: ballNode.x, y: ballNode.y });
+                    fullPathHistory.push({ x: ballNode.x, y: ballNode.y });
                     if (probeTrail.length > 18) probeTrail.shift();
 
                     if (ballNode.x < 0 || ballNode.x > canvas.width || ballNode.y < 0 || ballNode.y > canvas.height) {
                         if (typeof AudioMatrix !== 'undefined') AudioMatrix.playError();
+                        ghostTrail = [...fullPathHistory];
                         probesLeft--;
                         if (probesLeft <= 0) triggerTerminalOverlay(false);
                         else generateLevelLayout();
                     }
+                }
+
+                // Draw Ghost Trail
+                if (ghostTrail.length > 0) {
+                    ctx.beginPath();
+                    ctx.setLineDash([2, 6]);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(ghostTrail[0].x, ghostTrail[0].y);
+                    for (let i = 1; i < ghostTrail.length; i++) {
+                        ctx.lineTo(ghostTrail[i].x, ghostTrail[i].y);
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
                 }
 
                 probeTrail.forEach((pt, index) => {
