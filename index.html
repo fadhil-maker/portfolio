@@ -228,14 +228,14 @@
             .custom-cursor { 
             position: fixed; top: 0; left: 0; width: 6px; height: 6px; 
             background: var(--accent); pointer-events: none; border-radius: 50%;
-            z-index: 999999; transform: translate(-50%, -50%);
+            z-index: 999999; transform: translate(-50%, -50%); opacity: 0;
         }
             
             .cursor-follower { 
             position: fixed; top: 0; left: 0; width: 26px; height: 26px; 
             border: 1px solid rgba(176, 161, 113, 0.4); pointer-events: none; 
             border-radius: 50%; z-index: 999998; transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
+            transition: transform 0.1s ease-out, background 0.2s, border-color 0.2s; opacity: 0;
         }
             
             .pointer-hover-active { 
@@ -2097,8 +2097,20 @@
         let ringX = 0, ringY = 0;
 
         window.addEventListener('mousemove', e => {
+            // Un-hide on first move
+            if (dot.style.opacity === "") {
+                dot.style.opacity = "1";
+                ring.style.opacity = "1";
+            }
             mouseX = e.clientX;
             mouseY = e.clientY;
+        });
+
+        // Add hover effect logic
+        const interactables = document.querySelectorAll('a, button, .project-card, .glass-panel, input');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('pointer-hover-active'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('pointer-hover-active'));
         });
 
         function animate() {
