@@ -222,27 +222,34 @@
         #interaction-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999997; }
 
         /* PREMIUM DUAL-NODE CUSTOM CURSOR SYSTEM Styles */
-        @media (min-width: 769px) {
-            body, a, button, .project-card, .glass-panel { cursor: none !important; }
-            
-            .custom-cursor { 
+        body.hide-native-cursor, body.hide-native-cursor a, body.hide-native-cursor button, body.hide-native-cursor .project-card, body.hide-native-cursor .glass-panel { cursor: none !important; }
+        
+        .custom-cursor { 
             position: fixed; top: 0; left: 0; width: 6px; height: 6px; 
             background: var(--accent); pointer-events: none; border-radius: 50%;
             z-index: 999999; transform: translate(-50%, -50%); opacity: 0;
+            transition: opacity 0.2s;
         }
-            
-            .cursor-follower { 
+        
+        .cursor-follower { 
             position: fixed; top: 0; left: 0; width: 26px; height: 26px; 
             border: 1px solid rgba(176, 161, 113, 0.4); pointer-events: none; 
             border-radius: 50%; z-index: 999998; transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out, background 0.2s, border-color 0.2s; opacity: 0;
+            transition: transform 0.1s ease-out, background 0.2s, border-color 0.2s, opacity 0.2s; opacity: 0;
         }
-            
-            .pointer-hover-active { 
-                transform: translate(-50%, -50%) scale(1.4); 
-                background: rgba(176, 161, 113, 0.12); 
-                border-color: var(--accent); 
-            }
+        
+        .pointer-hover-active { 
+            transform: translate(-50%, -50%) scale(1.4); 
+            background: rgba(176, 161, 113, 0.12); 
+            border-color: var(--accent); 
+        }
+        
+        .touch-pulse {
+            transform: translate(-50%, -50%) scale(2);
+            background: rgba(176, 161, 113, 0.3);
+            border-color: var(--accent);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
         }
 
         .scroll-cue { position: absolute; bottom: 4vh; left: 8vw; display: flex; align-items: center; gap: 1rem; opacity: 0.3; }
@@ -2096,17 +2103,51 @@
         let dotX = 0, dotY = 0;
         let ringX = 0, ringY = 0;
 
+        // Determine if device uses mouse or touch
+        let isTouchDevice = false;
+
         window.addEventListener('mousemove', e => {
-            // Un-hide on first move
-            if (dot.style.opacity === "") {
-                dot.style.opacity = "1";
-                ring.style.opacity = "1";
-            }
+            if (isTouchDevice) return;
+            document.body.classList.add('hide-native-cursor');
+            dot.style.opacity = "1";
+            ring.style.opacity = "1";
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        // Add hover effect logic
+        // Touch device logic
+        window.addEventListener('touchstart', e => {
+            isTouchDevice = true;
+            document.body.classList.remove('hide-native-cursor');
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            dotX = mouseX;
+            dotY = mouseY;
+            ringX = mouseX;
+            ringY = mouseY;
+            
+            // Touch pulse animation
+            ring.classList.add('touch-pulse');
+            dot.style.opacity = "1";
+            ring.style.opacity = "1";
+            
+            setTimeout(() => {
+                ring.classList.remove('touch-pulse');
+            }, 400);
+        });
+
+        window.addEventListener('touchmove', e => {
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+        });
+
+        window.addEventListener('touchend', e => {
+            // Fade out when finger lifts
+            dot.style.opacity = "0";
+            ring.style.opacity = "0";
+        });
+
+        // Add hover effect logic (Only for mouse interactions)
         const interactables = document.querySelectorAll('a, button, .project-card, .glass-panel, input');
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => ring.classList.add('pointer-hover-active'));
